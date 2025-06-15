@@ -1,0 +1,44 @@
+.hash-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex-direction: column;
+}
+
+.hash-loader-spinner {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: relative;
+    animation: spin 1s linear infinite;
+}
+
+
+.hash-loader-spinner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    padding: 5px;
+    background: conic-gradient(var(--main-color), transparent);
+    -webkit-mask:
+        radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 5px));
+    mask:
+        radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 5px));
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

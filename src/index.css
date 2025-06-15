@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'); */
+@import "tailwindcss";
+
+@theme {
+    --color-main: #4E9036;
+    --color-second: #F5F5F5;
+    --color-second-dark: #2C2C2C;
+    --color-main-opacity: #4e903673;
+    --color-sub-text: #777777;
+    --color-title: #4A4A4A;
+    --default-transition-duration: .4s;
+    /* ... */
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+    --second-color: #F5F5F5;
+    --main-color: #4E9036;
+    --radius: 12px;
+    /* --transition: .5s all; */
+    --color-avocado-600: oklch(0.441 0.518 82.72);
+}
+
+* {
+    /* font-family: "Roboto", sans-serif; */
+    font-family: "Roboto", serif;
+    transition: .4s all !important;
+}
+
+button {
+    border-radius: var(--radius);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+}
+
+.p-top-bottom-35 {
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+.underline-text {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    color: #696969;
+}
+
+.home {
+    height: calc(100vh - 100px);
+}
+
+@media (width <=48rem) {
+    .home {
+        height: fit-content;
+    }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollHedden::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollHedden {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}

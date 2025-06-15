@@ -1,0 +1,69 @@
+{
+    "Home": "الرئيسية",
+    "About": "من نحن",
+    "Services": "الخدمات",
+    "Contact": "اتصل بنا",
+    "العربيه": "English",
+    "Discover": "اكتشف",
+    "PCB defects easily": "اكتشف عيوب لوحات الدوائر بسهولة",
+    "and without losses": "وبدون خسائر",
+    "Discover PCB defects easily and without losses": "اكتشف عيوب لوحات الدوائر بسهولة وبدون خسائر",
+    "At PCB Vision, we offer advanced solutions powered by AI and machine learning, fully compatible with your production lines to achieve the highest quality standards.": "في PCB Vision، نقدم حلولًا متقدمة مدعومة بالذكاء الاصطناعي وتعلم الآلة، متوافقة تمامًا مع خطوط الإنتاج الخاصة بك لتحقيق أعلى معايير الجودة.",
+    "Create Account": "إنشاء حساب",
+    "Login": "تسجيل الدخول",
+    "PCB Vision is our graduation project from the Faculty of Engineering, Computer and Systems Department at Fayoum University.We are dedicated to developing intelligent solutions for detecting defects in printed circuit boards (PCBs) using artificial intelligence and machine learning technologies.": "نسعى لتمكين الشركات والأفراد من تحسين إنتاجهم وتقليل الأخطاء، مما يؤدي إلى تعزيز الكفاءة وتحقيق نتائج أفضل. كما نقدم أيضًا خدمة مخصصة للمهندسين وطلاب الهندسة الذين لديهم لوحات PCB، حيث نساعدهم في اكتشاف العيوب وتقديم حلول مقترحة لتحسين الأداء والجودة.",
+    "Our Goal": "هدفنا",
+    "Our goal is to help companies enhance production accuracy and efficiency by providing fast and precise defect detection models. Additionally, we support engineers and students working with PCBs by offering a specialized service to identify defects and propose solutions to improve quality and performance.": "نسعى لتمكين الشركات والأفراد من تحسين إنتاجهم وتقليل الأخطاء، مما يؤدي إلى تعزيز الكفاءة وتحقيق نتائج أفضل. كما نقدم أيضًا خدمة مخصصة للمهندسين وطلاب الهندسة الذين لديهم لوحات PCB، حيث نساعدهم في اكتشاف العيوب وتقديم حلول مقترحة لتحسين الأداء والجودة.",
+    "Companies": "الشركات",
+    "Our system optimizes PCB production lines by detecting defects, tracking performance, and streamlining quality control through a real-time dashboard and employee management tools.": "نظامنا يعمل على تحسين خطوط إنتاج لوحات الدوائر المطبوعة (PCB) من خلال اكتشاف العيوب، تتبع الأداء، وتبسيط مراقبة الجودة باستخدام لوحة تحكم في الوقت الفعلي وأدوات إدارة الموظفين.",
+    "Engineers": "المهندسين",
+    "In light of the high cost of PCBs and the difficulty of detecting defects, our platform supports engineers by identifying PCB issues using artificial intelligence and machine learning. It also assists in resolving these defects effectively.": "نظرًا للتكلفة العالية للوحات الدوائر المطبوعة (PCB) وصعوبة اكتشاف العيوب، فإن منصتنا تدعم المهندسين من خلال تحديد مشاكل لوحات الدوائر باستخدام الذكاء الاصطناعي وتعلم الآلة. كما تساعد في حل هذه العيوب بشكل فعال.",
+    "Name": "الاسم",
+    "Email": "البريد الإلكتروني",
+    "Subject": "الموضوع",
+    "Your message": "رسالتك",
+    "Name is required": "الاسم مطلوب",
+    "Invalid email format, username@example.com": "صيغة البريد الإلكتروني غير صحيحة، username@example.com",
+    "Subject is required": "الموضوع مطلوب",
+    "Your message is required": "رسالتك مطلوبة",
+    "Thank you so much for your feedback! 🌟 Your input helps us improve and serve you better.": "شكرًا جزيلًا على ملاحظاتك! 🌟 ملاحظاتك تساعدنا على التحسين وخدمتك بشكل أفضل.",
+    "Send": "إرسال",
+    "Detect defects in PCBs, highlight them in the image, and help companies improve production accuracy on their lines": "اكتشف العيوب في لوحات الدوائر المطبوعة (PCBs)، قم بتحديدها في الصورة، وساعد الشركات على تحسين دقة الإنتاج في خطوطها.",
+    "Copyright &copy; 2025 PCB Vision team - All Right Reserved": "حقوق النشر &copy; 2025 فريق PCB Vision - جميع الحقوق محفوظة",
+    "Copyright": "حقوق النشر",
+    "2025 PCB Vision team - All Right Reserved": "2025 فريق PCB Vision - جميع الحقوق محفوظة",
+    "Your Opinion Matters to": "رأيك يهمنا",
+    "Us": " ",
+    "Log in to your account": "سجل الدخول إلى حسابك",
+    "Password": "كلمة المرور",
+    "Create": "إنشاء",
+    "Company account": "حساب الشركة",
+    "You don't have an account": "ليس لديك حساب؟",
+    "create account": "إنشاء حساب",
+    "Create your personal account": "أنشئ حسابك الشخصي",
+    "Full Name": "الاسم الكامل",
+    "Phone": "الهاتف",
+    "Confirm password": "تأكيد كلمة المرور",
+    "Already have an account?": "هل لديك حساب بالفعل؟",
+    "login here": "سجل الدخول هنا",
+    "Submit": "إرسال",
+    "The Egyptian phone number must consist of 11 digits": "رقم الهاتف المصري يجب أن يتكون من 11 رقمًا",
+    "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.": "يجب أن تكون كلمة المرور مكونة من 8 أحرف على الأقل وتحتوي على حرف كبير، وحرف صغير، ورقم، وحرف خاص.",
+    "Passwords do not match": "كلمتا المرور غير متطابقتين",
+    "Form submitted successfully, You can log in now! ✅": "تم إرسال النموذج بنجاح، يمكنك تسجيل الدخول الآن! ✅",
+    "Invalid email or password. Please try again.": "البريد الإلكتروني أو كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.",
+    "Sorry, an error occurred. Try again later": "عذرًا، حدث خطأ. يرجى المحاولة مرة أخرى لاحقًا.",
+    "Unacceptable value. Try again": "قيمة غير مقبولة. يرجى المحاولة مرة أخرى.",
+    "Reset": "إعادة تعيين",
+    "The response was obtained successfully": "تم الحصول على الرد بنجاح",
+    "Defect Name:": "اسم العيب:",
+    "History": "السجل",
+    "Boards": "اللوحات",
+    "Light Mode": "الوضع الفاتح",
+    "Dark Mode": "الوضع المظلم",
+    "Edit": "تعديل",
+    "Log out": "تسجيل الخروج",
+    "User updated successfully! 🎉": "تم تحديث المستخدم بنجاح! 🎉",
+    "Save": "حفظ",
+    "Loading...": "جاري التحميل..."
+}
