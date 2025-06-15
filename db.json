@@ -1,0 +1,73 @@
+{
+  "employees": [
+    {
+      "Image": "",
+      "Name": "John Deo11",
+      "Email": "johndeo@example.com",
+      "Password": "1",
+      "Phone": "",
+      "Date_of_Birth": "1990-05-15",
+      "Role_ID": "Operator",
+      "Line_ID": "LINE-12345",
+      "id": "550e8400-e29b-41d4-a716-446655440000"
+    },
+    {
+      "Image": "",
+      "id": "660e8400-e29b-41d4-a716-446655440001",
+      "Name": "Ahmed Ali",
+      "Date_of_Birth": "1985-08-22",
+      "Email": "ahmedali@example.com",
+      "Password": "2",
+      "Role_ID": "Engineer",
+      "Line_ID": "LINE-12345",
+      "Phone": ""
+    },
+    {
+      "Image": "https://picsum.photos/536/354",
+      "Name": "David Williams",
+      "Email": "davidwilliams@example.com",
+      "Password": "12345",
+      "Phone": "",
+      "Date_of_Birth": "1992-11-03",
+      "Role_ID": "Operator",
+      "Line_ID": "LINE-24680",
+      "id": "760e8400-e29b-41d4-a716-446655440007"
+    },
+    {
+      "Image": "",
+      "id": "860e8400-e29b-41d4-a716-4466554400011",
+      "Name": "Eng: Sophia Lee",
+      "Date_of_Birth": "1988-06-17",
+      "Email": "sophialee@example.com",
+      "Password": "54321",
+      "Role_ID": "Engineer",
+      "Line_ID": "LINE-24680",
+      "Phone": ""
+    },
+    {
+      "Image": "",
+      "id": "770e8400-e29b-41d4-a716-446655440002",
+      "Name": "Michael Johnso1",
+      "Date_of_Birth": "1980-12-10",
+      "Email": "michaeljohnson@example.com",
+      "Password": "3",
+      "Role_ID": "Leader",
+      "Line_ID": "LINE-12345",
+      "Phone": ""
+    },
+    {
+      "Image": "",
+      "id": "550e8400-e29b-41d4-a716-4466577840000",
+      "Name": "Sarah Williams",
+      "Date_of_Birth": "1992-07-15",
+      "Email": "sarahwilliams@example.com",
+      "Password": "5",
+      "Role_ID": "Leader",
+      "Line_ID": "LINE-24680",
+      "Phone": ""
+    }
+  ],
+  "PCBs": [
+  
+  ]
+}
