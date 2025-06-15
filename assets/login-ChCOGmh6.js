@@ -1,0 +1,1 @@
+import{j as o}from"./index-ykkmzoko.js";import{L as i}from"./LoginComponent-T_q4RDMo.js";import"./assets-CT1zWT68.js";const t=()=>o.jsx("div",{children:o.jsx(i,{isCompanyLogin:!1})});export{t as default};
