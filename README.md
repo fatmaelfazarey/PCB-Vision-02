@@ -1,10 +1,14 @@
-# 🧠 PCB Vision
+# PCB Vision
 
 ### 🎓 Graduation Project – Faculty of Engineering, Fayoum University  
 **Department:** Computer and Systems Engineering
 
 ---
+## 🔗 Live Preview
 
+You can view the deployed project here:  
+👉 [https://pcb-vision-02.vercel.app/](https://pcb-vision-02.vercel.app/)
+---
 ## 📌 Description
 
 **PCB Vision** is a webSite designed to automate the detection of **defects and components** in Printed Circuit Boards (PCBs). This project was developed as part of our graduation project at the Faculty of Engineering, Fayoum University.
@@ -39,7 +43,7 @@ This type has three internal roles:
 
 3. **Leader**
    - Oversees all operations.
-   - Can **delete** any PCB record from the system.
+   - Can **delete**,**filter**and **search** any PCB record from the system.
 
 ---
 
