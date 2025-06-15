@@ -54,7 +54,7 @@ const QRcode = ({ SN, onSNUpload }) => {
         <div className='bg-second dark:bg-second-dark p-2.5 w-full flex gap-1 flex-col sm:w-[400px]'>
             <div className={`bg-black dark:bg-white w-full h-52 flex justify-center items-center`}>
                 {QRImage ? (
-                    <img src={QRImage} className={`bg-white max-w-full max-h-full m-auto`} alt="Uploaded QR Code" />
+                    <img src={QRImage} className={`bg-white max-w-full max-h-full m-auto`} alt="Uploaded QR Code" loading="lazy"/>
                 ) : (
                     <hr className={`bg-blue-700 w-[50%] h-0.5 m-auto`} />
                 )}

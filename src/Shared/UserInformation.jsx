@@ -66,10 +66,10 @@ const UserInformation = ({ id, isCompanyLogin, image, name, email, phone, Date_o
                             {isEdit ? (
                                 <>
                                     <input type='file' accept='image/*' className='absolute top-0 left-0 w-full h-full opacity-0' onChange={handleImageChange} />
-                                    <img src={userData.Image || assets.add_user} alt='user' id='userImage' className={`w-52 max-w-96 rounded-xl`} />
+                                    <img loading="lazy" src={userData.Image || assets.add_user} alt='user' id='userImage' className={`w-52 max-w-96 rounded-xl`} />
                                 </>
                             ) : (
-                                <img src={userData.Image || assets.user_icon} alt='user' id='userImage' className={`w-52 max-w-96 rounded-xl`} />
+                                <img loading="lazy" src={userData.Image || assets.user_icon} alt='user' id='userImage' className={`w-52 max-w-96 rounded-xl`} />
                             )}
                         </div>
                         <div className={`w-full`}>

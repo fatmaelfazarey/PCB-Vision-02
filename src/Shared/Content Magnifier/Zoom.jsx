@@ -51,7 +51,7 @@ const Zoom = ({
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
         >
-            <img
+            <img 
                 ref={imgRef}
                 src={imageSrc}
                 alt="Zoomable"

@@ -10,7 +10,7 @@ const HeaderWithSignBtns = () => {
         <nav className="p-4">
             <div className="relative max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2 md:p-4 sm:relative rounded-xl bg-second dark:bg-second-dark">
                 <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src={assets.logo} className="h-15" alt="Logo" />
+                    <img src={assets.logo} className="h-15" alt="Logo" loading="lazy"/>
                 </a>
 
                 <div className="mt-2 mb-1">

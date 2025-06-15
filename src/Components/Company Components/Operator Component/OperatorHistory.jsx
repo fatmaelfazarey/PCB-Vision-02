@@ -46,8 +46,8 @@ const OperatorHistory = ({ SN, CreatedAt, Pass_Fail, image1, image2, id, userId,
                                 <p className='text-xl text-title'>{Pass_Fail.Status !== 'Pending' && 'Modified Time : ' + Pass_Fail.Modified_Time} </p>
                             </div>
                             <div className='images flex flex-row gap-1.5 flex-wrap w-fit justify-end ml-auto'>
-                                {image1 && <img src={image1} alt='pcb' className='w-76 ' />}
-                                {image2 && <img src={image2} alt='pcb' className='w-76' />}
+                                {image1 && <img src={image1} alt='pcb' className='w-76 ' loading="lazy"/>}
+                                {image2 && <img src={image2} alt='pcb' className='w-76' loading="lazy"/>}
                             </div>
                         </div>
                     )}

@@ -124,7 +124,7 @@ const AddPCBImage = ({ image, onImageUpload }) => {
         <div className='bg-second dark:bg-second-dark p-2 sm:p-4 w-full sm:w-fit flex flex-col gap-2'>
             <div className='w-full sm:w-[400px] h-[500px] bg-black dark:bg-white'>
                 {uploadImage ? (
-                    <img src={pcbImage} alt="Uploaded PCB" className='' />
+                    <img src={pcbImage} alt="Uploaded PCB" className='' loading="lazy"/>
                 ) : (
                     <div className='bg-black dark:bg-white w-full h-full'>
                         {startVideo && (
@@ -143,6 +143,7 @@ const AddPCBImage = ({ image, onImageUpload }) => {
                                             src={pcbImage}
                                             alt="Captured"
                                             style={{ width: '100%', maxWidth: '500px' }}
+                                            loading="lazy"
                                         />
                                     </div>
                                 )}

@@ -77,7 +77,7 @@ const History = ({
             <div className='max-w-screen-xl mx-auto flex flex-col w-full h-full'>
                 <div className='bg-second dark:bg-second-dark p-2 sm:p-5 w-full'>
                     <div className='bg-white dark:bg-black rounded-xl w-full h-full flex flex-col items-center justify-center gap-2'>
-                        <img src={assets.not_found} alt="empty" title='click to add history' className='w-full' />
+                        <img loading="lazy" src={assets.not_found} alt="empty" title='click to add history' className='w-full' />
                         <p className='p-2 bg-white dark:bg-black'>Error: {userHistoryError}</p>
                     </div>
                 </div>
@@ -119,7 +119,7 @@ const History = ({
 
                     {showEmptyState ? (
                         <div className='bg-white dark:bg-black rounded-xl w-full h-full flex flex-col items-center justify-center gap-2'>
-                            <img src={assets.empty} alt="empty" title='No matching results found' />
+                            <img loading="lazy" src={assets.empty} alt="empty" title='No matching results found' />
                             <h1 className='text-sub-text' >No matching results found</h1>
 
                         </div>
@@ -220,7 +220,7 @@ const History = ({
                             to={navigateTo}
                             className='bg-white dark:bg-black rounded-xl w-full h-full flex flex-col items-center justify-center gap-2'
                         >
-                            <img src={assets.empty} alt="empty" title='click to add history' />
+                            <img src={assets.empty} alt="empty" title='click to add history' loading="lazy"/>
                             <h1 title='click to add history'>No history...</h1>
                         </Link>
                     )}

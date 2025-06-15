@@ -208,7 +208,7 @@ const DisplayResponseAndHistoryComp = (props) => {
                                 :
                                 <div className='w-fit h-fit'>
                                     <BoundingBox detections={props.defects.detections} />
-                                    <img src={props.image1} alt='pcb' />
+                                    <img src={props.image1} alt='pcb' loading="lazy" />
                                 </div>
                             }
                         </div>
@@ -238,7 +238,7 @@ const DisplayResponseAndHistoryComp = (props) => {
                                 :
                                 <div className='w-fit h-fit'>
                                     <BoundingBox detections={props.components.components} />
-                                    <img src={props.image2} alt='pcb' />
+                                    <img src={props.image2} alt='pcb' loading="lazy"/>
                                 </div>
                             }
                         </div>
