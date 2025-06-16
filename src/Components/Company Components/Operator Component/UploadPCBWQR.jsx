@@ -150,7 +150,7 @@ const UploadPCBWQR = ({ employeeId, Line_ID }) => {
     };
 
     return (
-        <form className='max-w-screen-xl mx-auto pt-7 pb-7 flex flex-col gap-3 w-full' onSubmit={handleSubmit}>
+        <form className='max-w-screen-xl mx-auto pt-7 pb-7 flex flex-col gap-3 w-full fixed_direction' onSubmit={handleSubmit}>
             {/* Show Toast if visible */}
             {showToast && <Toast message={toastMessage} onClose={handleCloseToast} />}
 
@@ -158,13 +158,13 @@ const UploadPCBWQR = ({ employeeId, Line_ID }) => {
             {isLoading && <Loading />}
 
             {/* Image upload section */}
-            <div className="flex flex-col lg:flex-row gap-3 w-full items-center justify-center">
+            <div className="flex flex-col lg:flex-row gap-3 w-full items-center justify-center fixed_direction">
                 <AddPCBImage image='image1' onImageUpload={handleImageUpload} />
                 <AddPCBImage image='image2' onImageUpload={handleImageUpload} />
             </div>
 
             {/* QR code section */}
-            <div className='flex justify-center align-middle'>
+            <div className='flex justify-center align-middle fixed_direction'>
                 <QRcode SN='SN' onSNUpload={handleImageUpload} />
             </div>
 

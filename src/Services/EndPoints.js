@@ -10,6 +10,12 @@ export const CompanyServicesEndPoints = {
     ALL_PCBS: `http://localhost:3002/PCBs`,
     // For updating PCB status (PATCH) Pass or Repair
     STATUS_UPDATE_URL: (pcbId) => `http://localhost:3002/PCBs/${pcbId}`,
+    //POST
+    ADD_NEW_EMPLOYEE: `http://localhost:3002/employees`,
+    //Get
+    ALL_EMPLOYEES: `http://localhost:3002/employees`,
+    // DELETE
+    DELETE_AN_EMPLOYEE: (employeeId) => `http://localhost:3002/employees/${employeeId}`,
 };
 //#endregion
 

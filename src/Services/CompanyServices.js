@@ -71,7 +71,7 @@ export const LoginAsCompany = async (email, password, setEmployee, setEmployeeId
             // localStorage.setItem('employeeId', users[0].id);
             // localStorage.setItem('role', users[0].Role_ID);
 
-              alert("Login successful! 🎉");
+            alert("Login successful! 🎉");
             setEmployee(users[0]);
             setEmployeeId(users[0].id);
             setRole(users[0].Role_ID);
@@ -137,3 +137,125 @@ export const StatusUpdate = async (pcbId, passFailUpdate) => {
         return false;
     }
 };
+
+export const AddNewEmployee = async (employee) => {
+    // const url = `http://localhost:3002/employees`;
+    const url = CompanyServicesEndPoints.ADD_NEW_EMPLOYEE;
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(employee),
+        });
+        if (!response.ok) {
+            const error = await response.text();
+            throw new Error(`Failed to add Employee :${error}`);
+        }
+        let data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error adding Employee:', error.message);
+    }
+}
+
+export const AllEmployees = async (setEmployees, setEmployeesLoading, setEmployeesError) => {
+    // const url = `http://localhost:3002/PCBs`;
+    const url = CompanyServicesEndPoints.ALL_EMPLOYEES;
+    setEmployeesLoading(true);
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`Failed to fetch Employees : ${errorMessage}`);
+        }
+        const data = await response.json();
+        setEmployees(data);
+        console.log(data)
+        return data;
+    } catch (error) {
+        console.error('Error fetching Employees :', error.message);
+        setEmployeesError(error.message);
+        // throw new Error(`Failed to fetch Employees : ${error.message}`);
+    } finally {
+        setEmployeesLoading(false);
+    }
+};
+
+export const DeleteAnEmployee = async (employeeId) => {
+    const url = CompanyServicesEndPoints.DELETE_AN_EMPLOYEE(employeeId);
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`Failed to fetch Employees : ${errorMessage}`);
+        }
+        // alert('done')
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching Employees :', error.message);
+        // throw new Error(`Failed to fetch Employees : ${error.message}`);
+    }
+}
+export const GetAnEmployee = async (employeeId) => {
+    const url = CompanyServicesEndPoints.DELETE_AN_EMPLOYEE(employeeId);
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`Failed to fetch Employees : ${errorMessage}`);
+        }
+        // alert('done')
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching Employees :', error.message);
+        // throw new Error(`Failed to fetch Employees : ${error.message}`);
+    }
+}
+export const EditEmployee = async (employeeId, employee) => {
+    // if (typeof employeeId !== 'string' && typeof employeeId !== 'number') {
+    //     console.error('Invalid employeeId:', employeeId);
+    //     throw new Error('Invalid employee ID');
+    // }
+    console.log(employeeId)
+    const url = CompanyServicesEndPoints.DELETE_AN_EMPLOYEE(employeeId);
+
+    try {
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(employee)
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Update failed with status ${response.status}: ${errorText}`);
+        }
+
+        return true;
+
+    } catch (error) {
+        console.error('Employee update error:', error.message);
+        return false;
+    }
+}

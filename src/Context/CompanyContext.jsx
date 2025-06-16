@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { getPCBS, getEmployeeIsLogin, LoginAsCompany, AllPCBS } from "../Services/CompanyServices";
+import { getPCBS, getEmployeeIsLogin, LoginAsCompany, AllPCBS, AllEmployees } from "../Services/CompanyServices";
 
 export const CompanyContext = createContext();
 
@@ -40,6 +40,23 @@ const CompanyContextProvider = (props) => {
     }, [employeeId]);
 
     //#endregion
+    //#region All Employees
+    const [Employees, setEmployees] = useState(null);
+    const [EmployeesLoading, setEmployeesLoading] = useState(false);
+    const [EmployeesError, setEmployeesError] = useState(null);
+    useEffect(() => {
+        if (employeeId && role === 'Leader') {
+            AllEmployees(setEmployees, setEmployeesLoading, setEmployeesError);
+        }
+    }, [employeeId]);
+
+    //#endregion
+    //#region  edit employee
+    const [editEmployee, setEditEmployee] = useState(null);
+    const [isEmployeeEditMode, setIsEmployeeEditMode] = useState(false);
+
+    //#endregion
+
     const value = {
         LoginAsCompany,
         setEmployee,
@@ -50,7 +67,10 @@ const CompanyContextProvider = (props) => {
         userHistoryLoading,
         history,
         PCBS, PCBSLoading, PCBSError,
-        role, setRole
+        role, setRole,
+        Employees, EmployeesLoading, EmployeesError,
+        editEmployee, setEditEmployee,
+        isEmployeeEditMode, setIsEmployeeEditMode
     };
 
     return (
