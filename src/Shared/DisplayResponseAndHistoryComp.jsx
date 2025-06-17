@@ -104,7 +104,7 @@ const DisplayResponseAndHistoryComp = (props) => {
     const LeaderHistory = () => {
         return (
             <>
-                <p className='text-xl text-title'>Operant : {o_name || props.Operator_ID} </p>
+                <p className='text-xl text-title'>Operator : {o_name || props.Operator_ID} </p>
                 <p className='text-xl text-title'>Created At : {props.CreatedAt} </p>
                 <p className='text-xl text-title'>{!noDefects && 'Status :' + props.Pass_Fail.Status} </p>
                 <p className='text-xl text-title'>{!noDefects && 'Engineer :' + e_name || props.Pass_Fail.Modified_By} </p>

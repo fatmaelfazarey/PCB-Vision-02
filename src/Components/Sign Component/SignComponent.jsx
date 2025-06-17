@@ -74,7 +74,7 @@ const SignComponent = () => {
         <div className="relative bg-second dark:bg-second-dark flex items-center h-screen">
             <div className={`h-screen absolute top-0 left-0 md:relative bg-white dark:bg-black shadow-lg sm:w-130 w-[90%] flex flex-col justify-center items-center p-5 ${language === 'ar' ? 'rounded-l-4xl' : 'rounded-r-4xl'}`}>
                 <div className='text-center text-sub-text flex flex-col justify-center items-center'>
-                    <img src={assets.logo} alt='pcb' loading="lazy"/>
+                    <img src={assets.logo} alt='pcb' loading="lazy" />
                     <p className='text-lg'>{t('Create your personal account')}</p>
                 </div>
 
@@ -129,7 +129,7 @@ const SignComponent = () => {
                                 <input
                                     value={formData.Password}
                                     id='Password'
-                                    type={`${hiddenPassword} ?'password':'text'`}
+                                    type={hiddenPassword? 'password':'text'}
                                     name='Password'
                                     onChange={handleChange}
                                     className={`w-full rounded-xl outline-0 caret-main p-2 bg-second dark:bg-second-dark font-[400] dark:text-white`}
@@ -198,7 +198,7 @@ const SignComponent = () => {
             </div>
 
             <div className='w-full md:w-3/5 h-full overflow-hidden flex items-center'>
-                <img src={assets.sign} alt="Sign up illustration" loading="lazy"/>
+                <img src={assets.sign} alt="Sign up illustration" loading="lazy" />
             </div>
         </div>
     );

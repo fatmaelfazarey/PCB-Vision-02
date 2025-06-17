@@ -17,7 +17,7 @@ const ForgotPassword = lazy(() => import("./Pages/ForgotPassword"));
 const NotAccess = lazy(() => import("./Pages/NotAccess"));
 const EmployeesList = lazy(() => import("./Pages/Company Pages/EmployeesList"));
 const AddEmployee = lazy(() => import('./Pages/Company Pages/AddEmployee'));
-const employeeDetails = lazy(() => import('./Components/Company Components/Leader/EmployeeDetails'));
+const EmployeeDetails = lazy(() => import('./Pages/Company Pages/EmployeeDetails'));
 const EditEmployee = lazy(() => import('./Pages/Company Pages/EditEmployee'));
 
 const Guest = lazy(() => import('./Pages/Guest'));
@@ -46,7 +46,7 @@ export const routes = [
 
     { path: '/leader/:employeeId/add-employee', component: AddEmployee, public: false, company: true },
     { path: '/leader/:employeeId/employees', component: EmployeesList, public: false, company: true },
-    { path: '/leader/:employeeId/employees/:id', component: employeeDetails, public: false, company: true },
+    { path: '/leader/:employeeId/employees/:employeeDetailsId', component: EmployeeDetails, public: false, company: true },
     { path: '/leader/:employeeId/employees/edit-employee/:EditEmployeeId', component: EditEmployee, public: false, company: true },
 
     { path: '/company-profile/:employeeId', component: CompanyProfile, public: false, company: true },

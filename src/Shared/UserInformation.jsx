@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Toast from './Toast/Toast';
 import { UpdateUserInfo } from '../Services/SharedServices';
 
-const UserInformation = ({ id, isCompanyLogin, image, name, email, phone, Date_of_Birth, Line_ID, Password }) => {
+const UserInformation = ({ id, isCompanyLogin, image, name, email, phone, Date_of_Birth, Line_ID, Password, isViewMode }) => {
     const { toggleMode, isDarkMode, t, setLanguage, language } = useContext(AppContext);
     const [isEdit, setIsEdit] = useState(false);
     const [showSettingsList, setShowSettingsList] = useState(false);
@@ -119,7 +119,7 @@ const UserInformation = ({ id, isCompanyLogin, image, name, email, phone, Date_o
                             >
                                 {t('Save')}
                             </button>
-                        ) : (
+                        ) : <>{!isViewMode && (
                             <div className={`relative`} ref={dropdownRef}>
                                 <svg
                                     onClick={() => setShowSettingsList(!showSettingsList)}
@@ -175,7 +175,7 @@ const UserInformation = ({ id, isCompanyLogin, image, name, email, phone, Date_o
                                     </ul>
                                 )}
                             </div>
-                        )}
+                        )}</>}
                     </div>
                 </div>
             </div>

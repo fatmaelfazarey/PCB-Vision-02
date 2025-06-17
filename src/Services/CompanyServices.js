@@ -4,6 +4,7 @@ export const getPCBS = async (employeeId, setHistory, setUserHistoryLoading, set
 
     // const url = `http://localhost:3002/PCBs?${role}_ID=${employeeId}`;
     const url = CompanyServicesEndPoints.GET_PCBS_URL(role, employeeId);
+    // console.log(url);
     setUserHistoryLoading(true);
     try {
         const response = await fetch(url, {
@@ -17,6 +18,7 @@ export const getPCBS = async (employeeId, setHistory, setUserHistoryLoading, set
             throw new Error(`Failed to fetch PCB history: ${errorMessage}`);
         }
         const data = await response.json();
+        // console.log(data);
         setHistory(data);
     } catch (error) {
         console.error('Error fetching PCB history:', error.message);
@@ -177,7 +179,7 @@ export const AllEmployees = async (setEmployees, setEmployeesLoading, setEmploye
         }
         const data = await response.json();
         setEmployees(data);
-        console.log(data)
+        // console.log(data)
         return data;
     } catch (error) {
         console.error('Error fetching Employees :', error.message);

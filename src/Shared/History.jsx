@@ -30,13 +30,12 @@ const History = ({
 
         if (isCompanyLogin && isEngineerView) {
             return history.filter((e) => {
-                // return e.Line_ID === Line_ID &&
-                //     ((e.Defects && Object.keys(e.Defects.detections || []).length !== 0 && e.Pass_Fail?.Status === 'Pending') ||
-                //         (e.Components && Object.keys(e.Components.components || []).length !== 0 && e.Pass_Fail?.Status === 'Pending'));
                 return e.Line_ID === Line_ID &&
                     ((e.Defects && e.Pass_Fail?.Status === 'Pending') ||
                         (e.Components && e.Pass_Fail?.Status === 'Pending'));
             });
+        } else if (role === 'Leader') {
+            return history;
         } else if (Line_ID) {
             return history.filter((e) => e.Line_ID === Line_ID);
         }
@@ -220,7 +219,7 @@ const History = ({
                             to={navigateTo}
                             className='bg-white dark:bg-black rounded-xl w-full h-full flex flex-col items-center justify-center gap-2'
                         >
-                            <img src={assets.empty} alt="empty" title='click to add history' loading="lazy"/>
+                            <img src={assets.empty} alt="empty" title='click to add history' loading="lazy" />
                             <h1 title='click to add history'>No history...</h1>
                         </Link>
                     )}

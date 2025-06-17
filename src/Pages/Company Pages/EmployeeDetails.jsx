@@ -1,9 +1,8 @@
 import React, { lazy, useContext, useLocation } from 'react'
-const AddEmployeeComponent = lazy(() => import('../../Components/Company Components/Leader/AddEmployeeComponent'));
+const EmployeeDetailsComponent = lazy(() => import('../../Components/Company Components/Leader/EmployeeDetailsComponent'));
 const SecondHeader = lazy(() => import('../../Shared/SecondHeader'));
 import { CompanyContext } from '../../Context/CompanyContext';
-
-const EditEmployee = () => {
+const EmployeeDetails = () => {
     const { employeeId, employee, role } = useContext(CompanyContext);
 
     return (
@@ -11,9 +10,9 @@ const EditEmployee = () => {
             {
                 employee && <SecondHeader navigateTo={`/company-profile/${employeeId}`} isCompanyLogin={true} image={employee.Image} />
             }
-            <AddEmployeeComponent />
+            <EmployeeDetailsComponent />
         </div>
     )
 }
 
-export default EditEmployee
+export default EmployeeDetails

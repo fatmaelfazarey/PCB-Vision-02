@@ -1,15 +1,10 @@
-import React, { lazy, useContext, useLocation } from 'react'
-const AddEmployeeComponent = lazy(() => import('../../Components/Company Components/Leader/AddEmployee'));
+import React, { lazy, useContext } from 'react'
+const AddEmployeeComponent = lazy(() => import('../../Components/Company Components/Leader/AddEmployeeComponent'));
 const SecondHeader = lazy(() => import('../../Shared/SecondHeader'));
 import { CompanyContext } from '../../Context/CompanyContext';
 
 const AddEmployee = () => {
-    const { employeeId, employee, role } = useContext(CompanyContext);
-
-    // const location = useLocation();
-    // const { employeeData, isEditMode } = location.state || {};
-
-
+    const { employeeId, employee } = useContext(CompanyContext);
 
     return (
         <div className='pl-2.5 pr-2.5'>

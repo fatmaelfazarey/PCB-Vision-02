@@ -5,7 +5,7 @@ import { CompanyContext } from '../../../Context/CompanyContext';
 import { useParams } from 'react-router-dom';
 const Toast = lazy(() => import('../../../Shared/Toast/Toast'));
 
-const AddEmployee = () => {
+const AddEmployeeComponent = () => {
   const { isEmployeeEditMode, editEmployee, setIsEmployeeEditMode } = useContext(CompanyContext);
   const [formData, setFormData] = useState({
     Image: "",
@@ -67,9 +67,10 @@ const AddEmployee = () => {
   const lineIdDropdownRef = useRef(null);
   const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
   const [isLineIdDropdownOpen, setIsLineIdDropdownOpen] = useState(false);
-  const [showToast, setShowToast] = useState(false);
+
 
   //#region  Toast
+    const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const handleShowToast = (message) => {
     setToastMessage(message);
@@ -361,4 +362,4 @@ const AddEmployee = () => {
   );
 };
 
-export default AddEmployee;
+export default AddEmployeeComponent;
