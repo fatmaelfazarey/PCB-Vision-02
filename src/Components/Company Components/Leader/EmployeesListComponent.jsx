@@ -67,7 +67,7 @@ const EmployeesListComponent = () => {
     }
 
     return (
-        <div className='max-w-screen-xl mx-auto px-4 py-6'>
+        <div className='max-w-screen-xl mx-auto '>
             <h3 className="text-2xl font-medium text-gray-800 dark:text-white mb-6">
                 Employees List
             </h3>

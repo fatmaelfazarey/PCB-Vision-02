@@ -14,10 +14,11 @@ import empty from './empty.webp';
 import pcb2 from './pcb2.jpg';
 import pcb from './pcb3.jpg';
 import notfound from './Oops! 404 Error .png';
+import connectionError from './503 Error Service Unavailable-rafiki.svg';
 
 export const assets = {
     not_found,
-
+connectionError,
     add_user,
     atOffice,
     sign,

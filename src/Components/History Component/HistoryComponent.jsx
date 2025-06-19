@@ -26,6 +26,7 @@ const HistoryComponent = ({
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState('');
     const [useMagnify, setUseMagnify] = useState(false);
+    const [hidePCB, setHidePCB] = useState();
     // Toast Utilities
     const showToastMessage = (message) => {
         setToastMessage(message);
@@ -50,17 +51,19 @@ const HistoryComponent = ({
                 Modified_Time: GetCurrentDateTime()
             }
         };
-        if (StatusUpdate(pcbId, passFailUpdate)) window.location.reload();
+        StatusUpdate(pcbId, passFailUpdate);
+        // if (StatusUpdate(pcbId, passFailUpdate)) window.location.reload();
     };
 
-    const handlePass = (pcbId) => updatePassFailStatus(pcbId, 'Pass');
-    const handleRepair = (pcbId) => updatePassFailStatus(pcbId, 'Repair');
+    const handlePass = (pcbId) => { updatePassFailStatus(pcbId, 'Pass'); setHidePCB(pcbId) };
+    const handleRepair = (pcbId) => { updatePassFailStatus(pcbId, 'Repair'); setHidePCB(pcbId) };
 
     return (
         <div
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
-            className="bg-white dark:bg-black p-2 sm:p-5 rounded-xl flex flex-row justify-between gap-2 w-full h-full"
+            className={`bg-white dark:bg-black p-2 sm:p-5 rounded-xl flex flex-row justify-between gap-2 w-full h-full  ${hidePCB ? 'hidden' : ''}`
+            }
         >
             <div className="w-full flex flex-col gap-2 sm:gap-4 justify-between items-end relative">
                 {showToast && <Toast message={toastMessage} onClose={closeToast} />}
@@ -80,6 +83,8 @@ const HistoryComponent = ({
                         Pass_Fail={Pass_Fail || {}}
                         isEngineerView={isEngineerView}
                         magnify={useMagnify}
+                        hidePCB={hidePCB === id}
+                    // className={`${hidePCB === id ? 'hidden' : ''}`}
                     />
                 ) : (
                     <DisplayResponseAndHistoryComp

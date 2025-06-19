@@ -24,40 +24,10 @@ export const AddNewUser = async (userData) => {
     }
 };
 
-export const LoginUser = async (email, password, setUser) => {
-    // const url = `http://localhost:3001/users?Email=${email}&Password=${password}`;
-    const url = PersonalServicesEndPoints.LOGIN_URL(email, password);
-    try {
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-        if (!response.ok) {
-            throw new Error('Failed to fetch users');
-        }
-        const users = await response.json();
-        if (users.length > 0) {
-            alert("Login successful! 🎉");
-            localStorage.setItem('userId', users[0].id);
-            getUserIsLogined(users[0].id, setUser)
-            //  setUser(users[0]);
-            //  localStorage.setItem('userId', users[0].id);
-            //  localStorage.setItem('userId', token);
-            return users[0];
-        } else {
-            alert("Invalid email or password. Please try again.");
-            return null;
-        }
-    } catch (error) {
-        alert('Error logging in, Check the server connection', error.message);
-    }
-};
-
-export const getUserIsLogined = async (userId, setUser) => {
+export const getUserIsLogined = async (userId, setUser, setUserLoading, setUserError) => {
     // const url = `http://localhost:3001/users/${userId}`;
     const url = PersonalServicesEndPoints.GET_USER_IS_LOGINED(userId);
+    setUserLoading(true);
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -74,8 +44,45 @@ export const getUserIsLogined = async (userId, setUser) => {
         }
     } catch (error) {
         console.error('Error logging in:', error);
+        setUserError(error);
+    } finally {
+        setUserLoading(false);
     }
 };
+
+export const LoginUser = async (email, password, setUser, setUserLoading, setUserError) => {
+    // const url = `http://localhost:3001/users?Email=${email}&Password=${password}`;
+    const url = PersonalServicesEndPoints.LOGIN_URL(email, password);
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch users');
+        }
+        const users = await response.json();
+        if (users.length > 0) {
+            localStorage.setItem('userId', users[0].id);
+            alert("Login successful! 🎉");
+            localStorage.setItem('userId', users[0].id);
+            getUserIsLogined(users[0].id, setUser, setUserLoading, setUserError)
+            //  setUser(users[0]);
+            //  localStorage.setItem('userId', users[0].id);
+            //  localStorage.setItem('userId', token);
+            return users[0];
+        } else {
+            alert("Invalid email or password. Please try again.");
+            return null;
+        }
+    } catch (error) {
+        alert('Error logging in, Check the server connection', error.message);
+    }
+};
+
+
 
 export const forgotPassword = async (email, phone) => {
     // const url = `http://localhost:3001/users?Email=${email}&Phone=${phone}`;

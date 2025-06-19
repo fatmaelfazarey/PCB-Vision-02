@@ -6,7 +6,9 @@ import { useTranslation } from 'react-i18next';
 export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
-    const [user, setUser] = useState(null);  // Initial state set to null
+    const [user, setUser] = useState(null);
+    const [userLoading, setUserLoading] = useState(false);
+    const [userError, setUserError] = useState(null);
     const [userId, setUserId] = useState(null);
 
     //#region Language
@@ -20,13 +22,14 @@ const AppContextProvider = (props) => {
     }, [language, i18n]);
     //#endregion
 
-   
+
     useEffect(() => {
         if (localStorage.getItem('userId')) {
             setUserId(localStorage.getItem('userId'));
-            getUserIsLogined(localStorage.getItem('userId'), setUser);
+            setUserLoading(false);
+            getUserIsLogined(localStorage.getItem('userId'), setUser, setUserLoading, setUserError);
         }
-    }, []);
+    }, [userId]);
 
     //#region get History
     const [history, setHistory] = useState(null);
@@ -70,8 +73,8 @@ const AppContextProvider = (props) => {
 
     const value = {
         LoginUser,
-        user,
-        setUser,
+        user, userLoading, userError,
+        setUser, setUserLoading, setUserError,
         userId,
         userHistoryError,
         userHistoryLoading,

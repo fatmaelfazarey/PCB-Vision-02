@@ -3,15 +3,21 @@ const AddEmployeeComponent = lazy(() => import('../../Components/Company Compone
 const SecondHeader = lazy(() => import('../../Shared/SecondHeader'));
 import { CompanyContext } from '../../Context/CompanyContext';
 
+import { Navigate } from 'react-router-dom';
+
 const AddEmployee = () => {
-    const { employeeId, employee } = useContext(CompanyContext);
+    const { employeeId, employee, employeeLoading, employeeError } = useContext(CompanyContext);
 
     return (
-        <div className='pl-2.5 pr-2.5'>
-            {
+        <div className=' fixed_direction'>
+            {/* {
                 employee && <SecondHeader navigateTo={`/company-profile/${employeeId}`} isCompanyLogin={true} image={employee.Image} />
+            } */}
+            {
+                employee && <AddEmployeeComponent />
             }
-            <AddEmployeeComponent />
+
+            {!employee && !employeeLoading && employeeError && <Navigate to='/connection-error' state={{ path: location.pathname }} />}
         </div>
     )
 }

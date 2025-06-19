@@ -5,6 +5,9 @@ export const CompanyContext = createContext();
 
 const CompanyContextProvider = (props) => {
     const [employee, setEmployee] = useState(null);
+    const [employeeLoading, setEmployeeLoading] = useState(false);
+    const [employeeError, setEmployeeError] = useState(null);
+
     const [employeeId, setEmployeeId] = useState(null);
     const [role, setRole] = useState(null);
 
@@ -12,7 +15,7 @@ const CompanyContextProvider = (props) => {
         if (localStorage.getItem('employeeId') && localStorage.getItem('role')) {
             setEmployeeId(localStorage.getItem('employeeId'));
             setRole(localStorage.getItem('role'));
-            getEmployeeIsLogin(localStorage.getItem('employeeId'), setEmployee);
+            getEmployeeIsLogin(localStorage.getItem('employeeId'), setEmployee, setEmployeeLoading, setEmployeeError);
         }
     }, []);
     //#region get History
@@ -60,8 +63,8 @@ const CompanyContextProvider = (props) => {
     const value = {
         LoginAsCompany,
         setEmployee,
-        setEmployeeId,
-        employee,
+        setEmployeeId, setEmployeeLoading, setEmployeeError,
+        employee, employeeLoading, employeeError,
         employeeId,
         userHistoryError,
         userHistoryLoading,

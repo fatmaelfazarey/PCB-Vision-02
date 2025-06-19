@@ -136,6 +136,7 @@ const UploadPCB = ({ isGuest }) => {
                         type='reset'
                         value={t('Reset')}
                         onClick={resetForm}
+                        
                         className={`bg-white dark:bg-black text-main border font-bold py-2 px-4 rounded-xl transition hover:bg-main hover:opacity-100 hover:text-white hover:dark:text-black `}
                     />
                     <input

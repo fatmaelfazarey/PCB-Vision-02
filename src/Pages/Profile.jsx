@@ -1,21 +1,22 @@
 import React, { useContext } from 'react'
-import SecondHeader from '../Shared/SecondHeader';
+// import SecondHeader from '../Shared/SecondHeader';
 import UserInformation from '../Shared/UserInformation';
 import History from '../Shared/History';
 import { AppContext } from '../Context/AppContext';
+import { Navigate } from 'react-router-dom';
 
 const Profile = () => {
-    const { userId, user } = useContext(AppContext);
+    const { userId, user, userLoading, userError } = useContext(AppContext);
     const { history, userHistoryLoading, userHistoryError } = useContext(AppContext);
     return (
         <div className='pl-2.5 pr-2.5'>
-
+            {/* 
             {
                 user && <SecondHeader
                     isCompanyLogin={false}
                     navigateTo={`/main/${userId}`}
                     image={user.Image} />
-            }
+            } */}
             {
                 user && <UserInformation
                     isCompanyLogin={false}
@@ -35,6 +36,7 @@ const Profile = () => {
                 userHistoryError={userHistoryError}
                 navigateTo={`/main/${userId}`}
             />}
+            {!user && !userLoading && userError && <Navigate to='/connection-error' state={{ path: location.pathname }} />}
         </div>
     )
 }

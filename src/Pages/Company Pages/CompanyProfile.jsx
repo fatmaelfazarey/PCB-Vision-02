@@ -3,20 +3,21 @@ import SecondHeader from '../../Shared/SecondHeader'
 import { CompanyContext } from '../../Context/CompanyContext';
 import UserInformation from '../../Shared/UserInformation';
 import History from '../../Shared/History';
+import { Navigate } from 'react-router-dom';
 
 const CompanyProfile = () => {
-    const { employeeId, role, employee } = useContext(CompanyContext);
+    const { employeeId, role, employee, employeeLoading, employeeError } = useContext(CompanyContext);
     const { history, userHistoryLoading, userHistoryError } = useContext(CompanyContext);
     const { PCBS, PCBSLoading, PCBSError } = useContext(CompanyContext);
 
     return (
-        <div className='pl-2.5 pr-2.5'>
-            {
+        <div className='fixed_direction'>
+            {/* {
                 employee && <SecondHeader
                     isCompanyLogin={true}
                     navigateTo={`/${employee.Role_ID}/${employeeId}`}
                     image={employee.Image} />
-            }
+            } */}
 
             {
                 employee && <UserInformation
@@ -44,6 +45,7 @@ const CompanyProfile = () => {
                     navigateTo={`/${employee.Role_ID}/${employeeId}`}
                 />
             }
+            {!employee && !employeeLoading && employeeError && <Navigate to='/connection-error' state={{ path: location.pathname }} />}
 
         </div>
     )

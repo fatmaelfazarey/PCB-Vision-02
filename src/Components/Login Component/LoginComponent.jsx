@@ -13,8 +13,8 @@ import {
 const LoginComponent = (props) => {
     // Hooks and context
     const navigate = useNavigate();
-    const { LoginUser, language, t, setUser } = useContext(AppContext);
-    const { LoginAsCompany, setEmployee, setEmployeeId, setRole } = useContext(CompanyContext);
+    const { LoginUser, language, t, setUser, setUserLoading, setUserError } = useContext(AppContext);
+    const { LoginAsCompany, setEmployeeId, setRole, setEmployee, setEmployeeLoading, setEmployeeError } = useContext(CompanyContext);
 
     // State management
     const [hiddenPassword, setHiddenPassword] = useState(true);
@@ -63,7 +63,7 @@ const LoginComponent = (props) => {
 
         try {
             if (props.isCompanyLogin) {
-                const user = await LoginAsCompany(formData.Email, formData.Password, setEmployee, setEmployeeId, setRole);
+                const user = await LoginAsCompany(formData.Email, formData.Password, setEmployee, setEmployeeId, setRole, setEmployeeLoading, setEmployeeError);
                 if (user) {
                     rememberMe
                         ? saveCredentials(formData.Email, formData.Password)
@@ -71,10 +71,10 @@ const LoginComponent = (props) => {
                     navigate(`/${user.Role_ID}/${user.id}`);
                 }
             } else {
-                const user = await LoginUser(formData.Email, formData.Password, setUser);
+                const user = await LoginUser(formData.Email, formData.Password, setUser, setUserLoading, setUserError,);
                 if (user) {
                     rememberMe
-                        ? saveCredentials(formData.Email, formData.Password)
+                        ? saveCredentials(formData.Email, formData.Password,)
                         : clearCredentials();
                     navigate(`/main/${user.id}`);
                 }
@@ -89,7 +89,7 @@ const LoginComponent = (props) => {
         <div className="relative bg-second dark:bg-second-dark flex items-center h-screen">
             <div className={`h-screen absolute top-0 left-0 md:relative bg-white dark:bg-black shadow-lg sm:w-130 w-[90%] flex flex-col justify-center items-center p-5 ${language === 'ar' ? 'rounded-l-4xl' : 'rounded-r-4xl'}`}>
                 <div className='text-center text-sub-text flex flex-col justify-center items-center'>
-                    <img src={assets.logo} alt='pcb' loading="lazy"/>
+                    <img src={assets.logo} alt='pcb' loading="lazy" />
                     <p className='text-lg'>{props.isCompanyLogin ? t('Company Account Login') : t('Login to your Personal Account')}</p>
                 </div>
 
@@ -157,11 +157,11 @@ const LoginComponent = (props) => {
                                     </svg>
                                 )}
                             </div>
-                            <span className='text-sub-text text-sm'>Remember me</span>
+                            <span className='text-sub-text text-sm'>{t('Remember me')}</span>
                         </label>
                         {!props.isCompanyLogin && (
                             <div>
-                                <Link to="/forgot-password" className='text-main text-sm'>Forgot password?</Link>
+                                <Link to="/forgot-password" className='text-main text-sm'>{t('Forgot password?')}</Link>
                             </div>
                         )}
 
@@ -172,7 +172,7 @@ const LoginComponent = (props) => {
                         type="submit"
                         className={`w-fit bg-transparent border text-main font-bold py-2 px-4 rounded-xl opacity-90 transition hover:bg-main hover:opacity-100 hover:text-white dark:hover:text-black`}
                     >
-                        Login
+                        {t('Login')}
                     </button>
                 </form>
 
@@ -193,7 +193,7 @@ const LoginComponent = (props) => {
             </div>
 
             <div className='w-full md:w-3/5 h-full overflow-hidden flex items-center'>
-                <img src={assets.sign} alt="Sign in illustration" loading="lazy"/>
+                <img src={assets.sign} alt="Sign in illustration" loading="lazy" />
             </div>
         </div>
     );

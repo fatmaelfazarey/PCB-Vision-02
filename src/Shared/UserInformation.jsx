@@ -59,17 +59,17 @@ const UserInformation = ({ id, isCompanyLogin, image, name, email, phone, Date_o
     return (
         <>
             {showToast && <Toast message={toastMessage} onClose={handleCloseToast} />}
-            <div className='max-w-screen-xl mx-auto mt-7 mb-7 flex flex-col sm:flex-row gap-2.5 items-start fixed_direction'>
+            <div className='max-w-screen-xl mx-auto mb-7 flex flex-col sm:flex-row gap-2.5 items-start fixed_direction'>
                 <div className={`flex w-full ${isEdit ? 'flex-col' : 'flex-row'}`}>
                     <div className={`flex flex-col sm:flex-row w-full gap-2`}>
                         <div className={`bg-second dark:bg-second-dark p-1 rounded-xl relative w-fit`}>
                             {isEdit ? (
                                 <>
                                     <input type='file' accept='image/*' className='absolute top-0 left-0 w-full h-full opacity-0' onChange={handleImageChange} />
-                                    <img loading="lazy" src={userData.Image || assets.add_user} alt='user' id='userImage' className={`w-52 max-w-96 rounded-xl`} />
+                                    <img loading="lazy" src={userData.Image || assets.add_user} alt='user' id='userImage' className={`w-30 max-w-96 aspect-auto rounded-xl`} />
                                 </>
                             ) : (
-                                <img loading="lazy" src={userData.Image || assets.user_icon} alt='user' id='userImage' className={`w-52 max-w-96 rounded-xl`} />
+                                <img loading="lazy" src={userData.Image || assets.user_icon} alt='user' id='userImage' className={`w-52 max-w-96 aspect-auto rounded-xl`} />
                             )}
                         </div>
                         <div className={`w-full`}>

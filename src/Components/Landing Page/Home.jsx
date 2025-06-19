@@ -31,7 +31,8 @@ const Home = () => {
             <button
               className={`mr-2 bg-white dark:bg-black text-main border font-bold py-2 px-4 rounded transition hover:bg-main hover:opacity-100 hover:text-white dark:hover:text-black `}
               onMouseEnter={() => setIsHovered(false)}
-              onMouseLeave={() => setIsHovered(true)}>
+              onMouseLeave={() => setIsHovered(true)}
+            >
               {t('Create Account')}
             </button>
           </Link>

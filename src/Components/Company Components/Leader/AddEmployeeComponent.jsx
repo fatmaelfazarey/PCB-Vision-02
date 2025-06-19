@@ -168,15 +168,15 @@ const AddEmployeeComponent = () => {
   };
 
   return (
-    <div className='max-w-screen-xl mx-auto mt-4 '>
+    <div className='max-w-screen-xl mx-auto '>
       {/* <h1 className='font-medium text-2xl text-black dark:text-white mb-6'>Add Employee</h1> */}
-      <h3 className="text-[--page-title] font-medium text-[1.375rem] leading-[27.72px] m-0 p-0">
+      <h3 className="text-[--page-title] font-medium text-[1.375rem] leading-[27.72px] m-0 p-0 mb-6">
         {isEmployeeEditMode ? 'Edit Employee' : 'Add Employee'}
       </h3>
       {/* Show Toast if visible */}
       {showToast && <Toast message={toastMessage} onClose={handleCloseToast} />}
 
-      <form onSubmit={handleSubmit} className="space-y-6 p-5 shadow-lg rounded-xl bg-white">
+      <form onSubmit={handleSubmit} className="space-y-6 shadow-lg rounded-xl bg-white">
         {/* Image Section */}
         <div className="space-y-2">
           <div className='flex flex-row gap-4 items-end'>

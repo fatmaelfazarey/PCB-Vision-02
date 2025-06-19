@@ -215,7 +215,7 @@ const DisplayResponseAndHistoryComp = (props) => {
                     </div>
                 )}
             </div>
-            <div className={`components_model  w-full flex flex-col lg:flex-row justify-between`}>
+            <div className={`components_model  w-full flex flex-col lg:flex-row justify-between `}>
                 {props.image2 && (
                     <div className={`flex flex-col w-fit`}>
                         <u className='text-lg font-[400] text-sub-text'>Components</u>
@@ -238,7 +238,7 @@ const DisplayResponseAndHistoryComp = (props) => {
                                 :
                                 <div className='w-fit h-fit'>
                                     <BoundingBox detections={props.components.components} />
-                                    <img src={props.image2} alt='pcb' loading="lazy"/>
+                                    <img src={props.image2} alt='pcb' loading="lazy" />
                                 </div>
                             }
                         </div>

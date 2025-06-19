@@ -28,9 +28,10 @@ export const getPCBS = async (employeeId, setHistory, setUserHistoryLoading, set
     }
 };
 
-export const getEmployeeIsLogin = async (employeeId, setEmployee) => {
+export const getEmployeeIsLogin = async (employeeId, setEmployee, setEmployeeLoading, setEmployeeError) => {
     // const url = `http://localhost:3002/employees/${employeeId}`;
     const url = CompanyServicesEndPoints.GET_EMPLOYEE_IS_LOGINED_URL(employeeId);
+    setEmployeeLoading(true);
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -39,8 +40,8 @@ export const getEmployeeIsLogin = async (employeeId, setEmployee) => {
         const users = await response.json();
         if (users) {
             setEmployee(users);
-            localStorage.setItem('employeeId', users.id);
-            localStorage.setItem('role', users.Role_ID);
+            // localStorage.setItem('employeeId', users.id);
+            // localStorage.setItem('role', users.Role_ID);
             return users;
         } else {
             alert("Invalid user. Please try again.");
@@ -48,10 +49,13 @@ export const getEmployeeIsLogin = async (employeeId, setEmployee) => {
         }
     } catch (error) {
         console.error('Error logging in:', error);
+        setEmployeeError(error)
+    } finally {
+        setEmployeeLoading(false);
     }
 };
-
-export const LoginAsCompany = async (email, password, setEmployee, setEmployeeId, setRole) => {
+// formData.Email, formData.Password, setEmployee, setEmployeeId, setRole, setEmployeeLoading, setEmployeeError
+export const LoginAsCompany = async (email, password, setEmployee, setEmployeeId, setRole, setEmployeeLoading, setEmployeeError) => {
     // const url = `http://localhost:3002/employees?Email=${email}&Password=${password}`;
     const url = CompanyServicesEndPoints.LOGIN_AS_COMPANY_URL(email, password);
     try {
@@ -61,31 +65,21 @@ export const LoginAsCompany = async (email, password, setEmployee, setEmployeeId
         }
         const users = await response.json();
         if (users.length > 0) {
-            // alert("Login successful! 🎉");
-            // localStorage.setItem('employeeId', users[0].id);
-            // localStorage.setItem('role', users[0].Role_ID);
-            // setRole(users[0].Role_ID);
-            // setEmployeeId(users[0].id);
-            // getEmployeeIsLogin(users[0].id, setEmployee, setRole)
-            // setEmployee(users[0]);
-            // setEmployeeId(users[0].id);
-            // setRole(users[0].Role_ID);
-            // localStorage.setItem('employeeId', users[0].id);
-            // localStorage.setItem('role', users[0].Role_ID);
 
-            alert("Login successful! 🎉");
-            setEmployee(users[0]);
-            setEmployeeId(users[0].id);
-            setRole(users[0].Role_ID);
             localStorage.setItem('employeeId', users[0].id);
             localStorage.setItem('role', users[0].Role_ID);
-            return users[0];
+            alert("Login successful! 🎉");
+            setEmployeeId(users[0].id);
+            setRole(users[0].Role_ID);
+            // employeeId, setEmployee, setEmployeeLoading, setEmployeeError
+            getEmployeeIsLogin(users[0].id, setEmployee, setEmployeeLoading, setEmployeeError)
             return users[0];
         } else {
             alert("Invalid email or password. Please try again.");
             return null;
         }
     } catch (error) {
+        alert('Error logging in, Check the server connection');
         console.error('Error logging in:', error);
     }
 };
@@ -211,6 +205,7 @@ export const DeleteAnEmployee = async (employeeId) => {
         // throw new Error(`Failed to fetch Employees : ${error.message}`);
     }
 }
+
 export const GetAnEmployee = async (employeeId) => {
     const url = CompanyServicesEndPoints.DELETE_AN_EMPLOYEE(employeeId);
     try {
@@ -232,6 +227,7 @@ export const GetAnEmployee = async (employeeId) => {
         // throw new Error(`Failed to fetch Employees : ${error.message}`);
     }
 }
+
 export const EditEmployee = async (employeeId, employee) => {
     // if (typeof employeeId !== 'string' && typeof employeeId !== 'number') {
     //     console.error('Invalid employeeId:', employeeId);
