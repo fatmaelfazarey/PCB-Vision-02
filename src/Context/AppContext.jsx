@@ -75,7 +75,7 @@ const AppContextProvider = (props) => {
         LoginUser,
         user, userLoading, userError,
         setUser, setUserLoading, setUserError,
-        userId,
+        userId,setUserId,
         userHistoryError,
         userHistoryLoading,
         history,

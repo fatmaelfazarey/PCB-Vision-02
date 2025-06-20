@@ -13,7 +13,7 @@ import {
 const LoginComponent = (props) => {
     // Hooks and context
     const navigate = useNavigate();
-    const { LoginUser, language, t, setUser, setUserLoading, setUserError } = useContext(AppContext);
+    const { LoginUser, language, t, setUser, setUserLoading, setUserError, setUserId } = useContext(AppContext);
     const { LoginAsCompany, setEmployeeId, setRole, setEmployee, setEmployeeLoading, setEmployeeError } = useContext(CompanyContext);
 
     // State management
@@ -71,10 +71,10 @@ const LoginComponent = (props) => {
                     navigate(`/${user.Role_ID}/${user.id}`);
                 }
             } else {
-                const user = await LoginUser(formData.Email, formData.Password, setUser, setUserLoading, setUserError,);
+                const user = await LoginUser(formData.Email, formData.Password, setUserId, setUser, setUserLoading, setUserError);
                 if (user) {
                     rememberMe
-                        ? saveCredentials(formData.Email, formData.Password,)
+                        ? saveCredentials(formData.Email, formData.Password)
                         : clearCredentials();
                     navigate(`/main/${user.id}`);
                 }

@@ -50,7 +50,7 @@ export const getUserIsLogined = async (userId, setUser, setUserLoading, setUserE
     }
 };
 
-export const LoginUser = async (email, password, setUser, setUserLoading, setUserError) => {
+export const LoginUser = async (email, password, setUserId, setUser, setUserLoading, setUserError) => {
     // const url = `http://localhost:3001/users?Email=${email}&Password=${password}`;
     const url = PersonalServicesEndPoints.LOGIN_URL(email, password);
     try {
@@ -66,12 +66,9 @@ export const LoginUser = async (email, password, setUser, setUserLoading, setUse
         const users = await response.json();
         if (users.length > 0) {
             localStorage.setItem('userId', users[0].id);
+            setUserId(users[0].id);
             alert("Login successful! 🎉");
-            localStorage.setItem('userId', users[0].id);
-            getUserIsLogined(users[0].id, setUser, setUserLoading, setUserError)
-            //  setUser(users[0]);
-            //  localStorage.setItem('userId', users[0].id);
-            //  localStorage.setItem('userId', token);
+            getUserIsLogined(users[0].id, setUser, setUserLoading, setUserError);
             return users[0];
         } else {
             alert("Invalid email or password. Please try again.");
