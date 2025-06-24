@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { getPCBS, getEmployeeIsLogin, LoginAsCompany, AllPCBS, AllEmployees } from "../Services/CompanyServices";
+import { getPCBS, getEmployeeIsLogin, LoginAsCompany, AllPCBS, AllEmployees, GetPendingPCBS } from "../Services/CompanyServices";
 
 export const CompanyContext = createContext();
 
@@ -24,7 +24,7 @@ const CompanyContextProvider = (props) => {
     const [userHistoryError, setUserHistoryError] = useState(null);
     useEffect(() => {
 
-        if (employeeId) {
+        if (employeeId && role !== 'Leader') {
             // getPCBS(employeeId, setHistory, setUserHistoryLoading, setUserHistoryError, true, role);
             getPCBS(employeeId, setHistory, setUserHistoryLoading, setUserHistoryError, role);
         }
@@ -37,8 +37,21 @@ const CompanyContextProvider = (props) => {
     const [PCBSLoading, setPCBSLoading] = useState(false);
     const [PCBSError, setPCBSError] = useState(null);
     useEffect(() => {
-        if (employeeId) {
+        if (employeeId && role === 'Leader') {
             AllPCBS(setPCBS, setPCBSLoading, setPCBSError);
+
+        }
+    }, [employeeId]);
+
+    //#endregion
+    //#region Pending PCBS
+    const [PendingPCBS, setPendingPCBS] = useState(null);
+    const [PendingPCBSLoading, setPendingPCBSLoading] = useState(false);
+    const [PendingPCBSError, setPendingPCBSError] = useState(null);
+    useEffect(() => {
+        if (employeeId && role === 'Engineer') {
+
+            GetPendingPCBS(setPendingPCBS, setPendingPCBSLoading, setPendingPCBSError);
         }
     }, [employeeId]);
 
@@ -70,6 +83,7 @@ const CompanyContextProvider = (props) => {
         userHistoryLoading,
         history,
         PCBS, PCBSLoading, PCBSError,
+        PendingPCBS, PendingPCBSLoading, PendingPCBSError,
         role, setRole,
         Employees, EmployeesLoading, EmployeesError,
         editEmployee, setEditEmployee,

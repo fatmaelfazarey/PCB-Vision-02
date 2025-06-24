@@ -25,13 +25,13 @@ const AddEmployeeComponent = () => {
         // Case 1: Employee data passed directly via props (from location state)
         if (EditEmployeeId && editEmployee && isEmployeeEditMode) {
           setFormData({
-            Image: editEmployee.Image || '',
-            Name: editEmployee.Name || '',
-            Email: editEmployee.Email || '',
-            Phone: editEmployee.Phone || '',
-            Password: editEmployee.Password || '',
-            Role_ID: editEmployee.Role_ID || '',
-            Line_ID: editEmployee.Line_ID || ''
+            Image: editEmployee.image || '',
+            Name: editEmployee.name || '',
+            Email: editEmployee.email || '',
+            Phone: editEmployee.phone || '',
+            Password: editEmployee.password || '',
+            Role_ID: editEmployee.roleName || '',
+            Line_ID: editEmployee.line_ID || ''
           });
           return;
         }
@@ -70,7 +70,7 @@ const AddEmployeeComponent = () => {
 
 
   //#region  Toast
-    const [showToast, setShowToast] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const handleShowToast = (message) => {
     setToastMessage(message);
@@ -97,7 +97,8 @@ const AddEmployeeComponent = () => {
   const validationPatterns = {
     Email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
     Phone: /^01\d{9}$/,
-    Password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/
+    Password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+    usernameRegex: /^\S+$/
   };
 
   const handleChange = (e) => {
@@ -120,10 +121,11 @@ const AddEmployeeComponent = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.Name.trim()) newErrors.Name = "Name is required";
+    // if (!formData.Name.trim()) newErrors.Name = "Name is required";
+    if (!validationPatterns.usernameRegex.test(formData.Name)) newErrors.Name = "Username should not contain spaces";
     if (!validationPatterns.Email.test(formData.Email))
       newErrors.Email = "Invalid Email format (userName@example.com)";
-    if (!validationPatterns.Phone.test(formData.Phone))
+    if (formData.Phone && !validationPatterns.Phone.test(formData.Phone))
       newErrors.Phone = "Egyptian phone number must be 11 digits starting with 01";
     if (!validationPatterns.Password.test(formData.Password))
       newErrors.Password = "Password must be 8+ chars with uppercase, lowercase, number, and special character";
@@ -148,11 +150,7 @@ const AddEmployeeComponent = () => {
       } else {
         AddNewEmployee(formData)
         handleShowToast('A new employee has been added successfully.')
-
-
       }
-
-
 
       // Reset form
       setFormData({
@@ -176,7 +174,7 @@ const AddEmployeeComponent = () => {
       {/* Show Toast if visible */}
       {showToast && <Toast message={toastMessage} onClose={handleCloseToast} />}
 
-      <form onSubmit={handleSubmit} className="space-y-6 shadow-lg rounded-xl bg-white">
+      <form onSubmit={handleSubmit} className="space-y-6 shadow-lg rounded-xl ">
         {/* Image Section */}
         <div className="space-y-2">
           <div className='flex flex-row gap-4 items-end'>
@@ -184,21 +182,21 @@ const AddEmployeeComponent = () => {
               loading='lazy'
               src={formData.Image || assets.add_user}
               alt='user'
-              className='w-52 h-52  rounded-xl bg-second dark:bg-second-dark'
+              className='w-52 h-52  rounded-xl bg-second dark:bg-second-dark dark:text-white'
               onError={(e) => {
                 e.target.src = assets.add_user;
                 setErrors({ ...errors, Image: "Could not load image" });
               }}
             />
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+              <label className="block text-sm font-medium text-title mb-1">Image URL</label>
               <input
                 type='text'
                 name="Image"
                 value={formData.Image}
                 onChange={handleChange}
                 placeholder="Paste image URL here"
-                className='w-full p-2 bg-second dark:bg-second-dark rounded focus:outline-main'
+                className='w-full p-2 bg-second dark:bg-second-dark dark:text-white rounded focus:outline-main dark:text-white'
               />
             </div>
           </div>
@@ -213,28 +211,28 @@ const AddEmployeeComponent = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Name Field */}
           <div className='space-y-1'>
-            <label htmlFor="Name" className="block text-sm font-medium text-gray-700">Full Name <span className='text-red-500'>*</span></label>
+            <label htmlFor="Name" className="block text-sm font-medium text-title">User Name <span className='text-red-500'>*</span></label>
             <input
               id='Name'
               name="Name"
               type='text'
               value={formData.Name}
               onChange={handleChange}
-              className={`w-full p-2 bg-second dark:bg-second-dark rounded ${errors.Name ? 'border-red-500' : 'focus:outline-main'}`}
+              className={`w-full p-2 bg-second dark:bg-second-dark dark:text-white rounded ${errors.Name ? 'border-red-500' : 'focus:outline-main'}`}
             />
             {errors.Name && <p className="text-red-500 text-xs">{errors.Name}</p>}
           </div>
 
           {/* Phone Field */}
           <div className='space-y-1'>
-            <label htmlFor="Phone" className="block text-sm font-medium text-gray-700">Phone <span className='text-red-500'>*</span></label>
+            <label htmlFor="Phone" className="block text-sm font-medium text-title">Phone </label>
             <input
               id='Phone'
               name="Phone"
               type='tel'
               value={formData.Phone}
               onChange={handleChange}
-              className={`w-full p-2 bg-second dark:bg-second-dark rounded ${errors.Phone ? 'border-red-500' : 'focus:outline-main'}`}
+              className={`w-full p-2 bg-second dark:bg-second-dark dark:text-white rounded ${errors.Phone ? 'border-red-500' : 'focus:outline-main'}`}
               placeholder="01XXXXXXXXX"
             />
             {errors.Phone && <p className="text-red-500 text-xs">{errors.Phone}</p>}
@@ -242,14 +240,14 @@ const AddEmployeeComponent = () => {
 
           {/* Email Field */}
           <div className='space-y-1'>
-            <label htmlFor="Email" className="block text-sm font-medium text-gray-700">Email <span className='text-red-500'>*</span></label>
+            <label htmlFor="Email" className="block text-sm font-medium text-title">Email <span className='text-red-500'>*</span></label>
             <input
               id='Email'
               name="Email"
               type='email'
               value={formData.Email}
               onChange={handleChange}
-              className={`w-full p-2 bg-second dark:bg-second-dark rounded ${errors.Email ? 'border-red-500' : 'focus:outline-main'}`}
+              className={`w-full p-2 bg-second dark:bg-second-dark dark:text-white rounded ${errors.Email ? 'border-red-500' : 'focus:outline-main'}`}
               placeholder="user@example.com"
             />
             {errors.Email && <p className="text-red-500 text-xs">{errors.Email}</p>}
@@ -257,23 +255,23 @@ const AddEmployeeComponent = () => {
 
           {/* Password Field */}
           <div className='space-y-1'>
-            <label htmlFor="Password" className="block text-sm font-medium text-gray-700">Password <span className='text-red-500'>*</span></label>
+            <label htmlFor="Password" className="block text-sm font-medium text-title">Password <span className='text-red-500'>*</span></label>
             <input
               id='Password'
               name="Password"
               type='text'
               value={formData.Password}
               onChange={handleChange}
-              className={`w-full p-2 bg-second dark:bg-second-dark rounded ${errors.Password ? 'border-red-500' : 'focus:outline-main'}`}
+              className={`w-full p-2 bg-second dark:bg-second-dark dark:text-white rounded ${errors.Password ? 'border-red-500' : 'focus:outline-main'}`}
             />
             {errors.Password && <p className="text-red-500 text-xs">{errors.Password}</p>}
           </div>
 
           {/* Role Dropdown */}
           <div className='space-y-1'>
-            <label className="block text-sm font-medium text-gray-700">Role <span className='text-red-500'>*</span></label>
+            <label className="block text-sm font-medium text-title">Role <span className='text-red-500'>*</span></label>
             <div
-              className={`w-full p-2 bg-second dark:bg-second-dark rounded cursor-pointer relative ${errors.Role_ID ? 'border-red-500' : 'focus:outline-main'}`}
+              className={`w-full p-2 bg-second dark:bg-second-dark dark:text-white rounded cursor-pointer relative ${errors.Role_ID ? 'border-red-500' : 'focus:outline-main'}`}
               ref={roleDropdownRef}
               onClick={() => setIsRoleDropdownOpen(!isRoleDropdownOpen)}
             >
@@ -310,9 +308,9 @@ const AddEmployeeComponent = () => {
 
           {/* Line ID Dropdown */}
           <div className='space-y-1'>
-            <label className="block text-sm font-medium text-gray-700">Line ID <span className='text-red-500'>*</span></label>
+            <label className="block text-sm font-medium text-title">Line ID <span className='text-red-500'>*</span></label>
             <div
-              className={`w-full p-2 bg-second dark:bg-second-dark rounded cursor-pointer relative ${errors.Line_ID ? 'border-red-500' : 'focus:outline-main'}`}
+              className={`w-full p-2 bg-second dark:bg-second-dark dark:text-white rounded cursor-pointer relative ${errors.Line_ID ? 'border-red-500' : 'focus:outline-main'}`}
               ref={lineIdDropdownRef}
               onClick={() => setIsLineIdDropdownOpen(!isLineIdDropdownOpen)}
             >

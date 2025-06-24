@@ -93,5 +93,7 @@
     "Verify Account": "تأكيد الحساب",
     "Update Password": "تحديث كلمة المرور",
     "Processing...": "جاري المعالجة...",
-    "New Password": "كلمة المرور الجديدة"
+    "New Password": "كلمة المرور الجديدة",
+
+    "User Name":"اسم المستخدم"
 }

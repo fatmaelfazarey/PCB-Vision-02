@@ -1,24 +1,24 @@
 import { CompanyServicesEndPoints } from "./EndPoints";
 
-export const getPCBS = async (employeeId, setHistory, setUserHistoryLoading, setUserHistoryError, role = '') => {
 
-    // const url = `http://localhost:3002/PCBs?${role}_ID=${employeeId}`;
-    const url = CompanyServicesEndPoints.GET_PCBS_URL(role, employeeId);
-    // console.log(url);
+export const getPCBS = async (employeeId, setHistory, setUserHistoryLoading, setUserHistoryError, role = '') => {
+    const url = CompanyServicesEndPoints.GET_PCBS_URL;
     setUserHistoryLoading(true);
     try {
+        const token = `Bearer ${localStorage.getItem('employeeId')}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {
+                'Authorization': token,
                 'Content-Type': 'application/json',
-            },
+                'ngrok-skip-browser-warning': 'true'
+            }
         });
         if (!response.ok) {
             const errorMessage = await response.text();
-            throw new Error(`Failed to fetch PCB history: ${errorMessage}`);
+            throw new Error(`Failed to fetch Employees : ${errorMessage}`);
         }
         const data = await response.json();
-        // console.log(data);
         setHistory(data);
     } catch (error) {
         console.error('Error fetching PCB history:', error.message);
@@ -29,24 +29,39 @@ export const getPCBS = async (employeeId, setHistory, setUserHistoryLoading, set
 };
 
 export const getEmployeeIsLogin = async (employeeId, setEmployee, setEmployeeLoading, setEmployeeError) => {
-    // const url = `http://localhost:3002/employees/${employeeId}`;
-    const url = CompanyServicesEndPoints.GET_EMPLOYEE_IS_LOGINED_URL(employeeId);
+
+    const url = CompanyServicesEndPoints.GET_EMPLOYEE_IS_LOGINED_URL;
     setEmployeeLoading(true);
     try {
-        const response = await fetch(url);
+        const token = `Bearer ${employeeId}`;
+
+        if (!token) throw new Error('No authentication token found');
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
+            }
+        });
+
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const text = await response.text();
+            console.error('Received non-JSON response:', text.substring(0, 100));
+            throw new Error('Server returned unexpected format');
+        }
+
         if (!response.ok) {
-            throw new Error('Failed to fetch users');
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.message || `Server error: ${response.status}`);
         }
-        const users = await response.json();
-        if (users) {
-            setEmployee(users);
-            // localStorage.setItem('employeeId', users.id);
-            // localStorage.setItem('role', users.Role_ID);
-            return users;
-        } else {
-            alert("Invalid user. Please try again.");
-            return null;
-        }
+
+        const userData = await response.json();
+        setEmployee(userData);
+        return userData;
+
     } catch (error) {
         console.error('Error logging in:', error);
         setEmployeeError(error)
@@ -54,30 +69,41 @@ export const getEmployeeIsLogin = async (employeeId, setEmployee, setEmployeeLoa
         setEmployeeLoading(false);
     }
 };
-// formData.Email, formData.Password, setEmployee, setEmployeeId, setRole, setEmployeeLoading, setEmployeeError
-export const LoginAsCompany = async (email, password, setEmployee, setEmployeeId, setRole, setEmployeeLoading, setEmployeeError) => {
-    // const url = `http://localhost:3002/employees?Email=${email}&Password=${password}`;
-    const url = CompanyServicesEndPoints.LOGIN_AS_COMPANY_URL(email, password);
-    try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Failed to fetch users');
-        }
-        const users = await response.json();
-        if (users.length > 0) {
 
-            localStorage.setItem('employeeId', users[0].id);
-            localStorage.setItem('role', users[0].Role_ID);
+export const LoginAsCompany = async (email, password, setEmployee, setEmployeeId, setRole, setEmployeeLoading, setEmployeeError) => {
+
+    const url = CompanyServicesEndPoints.LOGIN_AS_COMPANY_URL;
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: email,
+                password: password
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || `Login failed with status: ${response.status}`);
+        }
+        const userData = await response.json();
+
+        if (userData) {
+            localStorage.setItem('employeeId', userData.token);
+            localStorage.setItem('role', userData.roleName);
             alert("Login successful! 🎉");
-            setEmployeeId(users[0].id);
-            setRole(users[0].Role_ID);
-            // employeeId, setEmployee, setEmployeeLoading, setEmployeeError
-            getEmployeeIsLogin(users[0].id, setEmployee, setEmployeeLoading, setEmployeeError)
-            return users[0];
+            setEmployeeId(userData.token);
+            setRole(userData.roleName);
+            getEmployeeIsLogin(userData.token, setEmployee, setEmployeeLoading, setEmployeeError)
+            return userData;
         } else {
-            alert("Invalid email or password. Please try again.");
+            alert("Invalid credentials. Please try again.");
             return null;
         }
+
     } catch (error) {
         alert('Error logging in, Check the server connection');
         console.error('Error logging in:', error);
@@ -85,16 +111,62 @@ export const LoginAsCompany = async (email, password, setEmployee, setEmployeeId
 };
 
 export const AllPCBS = async (setPCBS, setPCBSLoading, setPCBSError) => {
-    // const url = `http://localhost:3002/PCBs`;
     const url = CompanyServicesEndPoints.ALL_PCBS;
     setPCBSLoading(true);
     try {
+        const token = `Bearer ${localStorage.getItem('employeeId')}`;
+
+        if (!token) throw new Error('No authentication token found');
         const response = await fetch(url, {
             method: 'GET',
             headers: {
+                'Authorization': token,
                 'Content-Type': 'application/json',
-            },
+                'ngrok-skip-browser-warning': 'true'
+            }
         });
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const text = await response.text();
+            console.error('Received non-JSON response:', text.substring(0, 100));
+            throw new Error('Server returned unexpected format');
+        }
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`Failed to fetch PCB history: ${errorMessage}`);
+        }
+        const data = await response.json();
+
+        setPCBS(data);
+    } catch (error) {
+        console.error('Error fetching PCB history:', error.message);
+        setPCBSError(error.message);
+    } finally {
+        setPCBSLoading(false);
+    }
+};
+
+export const GetPendingPCBS = async (setPCBS, setPCBSLoading, setPCBSError) => {
+    const url = CompanyServicesEndPoints.Get_Pending_PCBS;
+    setPCBSLoading(true);
+    try {
+        const token = `Bearer ${localStorage.getItem('employeeId')}`;
+
+        if (!token) throw new Error('No authentication token found');
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
+            }
+        });
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const text = await response.text();
+            console.error('Received non-JSON response:', text.substring(0, 100));
+            throw new Error('Server returned unexpected format');
+        }
         if (!response.ok) {
             const errorMessage = await response.text();
             throw new Error(`Failed to fetch PCB history: ${errorMessage}`);
@@ -109,23 +181,28 @@ export const AllPCBS = async (setPCBS, setPCBSLoading, setPCBSError) => {
     }
 };
 
-export const StatusUpdate = async (pcbId, passFailUpdate) => {
-    const url = CompanyServicesEndPoints.STATUS_UPDATE_URL(pcbId);
+export const StatusUpdate = async (pcbId, pcbStatus) => {
+    const url = CompanyServicesEndPoints.STATUS_UPDATE_URL;
+    const token = `Bearer ${localStorage.getItem('employeeId')}`;
 
     try {
         const response = await fetch(url, {
-            method: 'PATCH',
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Authorization': token,
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
             },
-            body: JSON.stringify(passFailUpdate)
+            body: JSON.stringify({
+                pcbId: pcbId,
+                pass: pcbStatus
+            })
         });
 
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(`Update failed with status ${response.status}: ${errorText}`);
         }
-
         return true;
 
     } catch (error) {
@@ -135,50 +212,61 @@ export const StatusUpdate = async (pcbId, passFailUpdate) => {
 };
 
 export const AddNewEmployee = async (employee) => {
-    // const url = `http://localhost:3002/employees`;
-    const url = CompanyServicesEndPoints.ADD_NEW_EMPLOYEE;
+    const url = CompanyServicesEndPoints.ADD_NEW_EMPLOYEE(employee.Role_ID);
+
     try {
+        const token = `Bearer ${localStorage.getItem('employeeId')}`;
         const response = await fetch(url, {
             method: 'POST',
             headers: {
+                'Authorization': token,
                 'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
             },
-            body: JSON.stringify(employee),
+            body: JSON.stringify({
+                name: employee.Name,
+                email: employee.Email,
+                password: employee.Password,
+                line_ID: employee.Line_ID
+            })
         });
+
         if (!response.ok) {
-            const error = await response.text();
-            throw new Error(`Failed to add Employee :${error}`);
+            const errorData = await response.json();
+            console.error('Error response:', errorData);
+            throw new Error('Network response was not ok');
         }
-        let data = await response.json();
-        return data;
-    } catch (error) {
+        return true;
+    }
+    catch (error) {
         console.error('Error adding Employee:', error.message);
     }
 }
 
 export const AllEmployees = async (setEmployees, setEmployeesLoading, setEmployeesError) => {
-    // const url = `http://localhost:3002/PCBs`;
     const url = CompanyServicesEndPoints.ALL_EMPLOYEES;
     setEmployeesLoading(true);
+
     try {
+        const token = `Bearer ${localStorage.getItem('employeeId')}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {
+                'Authorization': token,
                 'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
             },
         });
         if (!response.ok) {
             const errorMessage = await response.text();
-            throw new Error(`Failed to fetch Employees : ${errorMessage}`);
+            throw new Error(`Failed to fetch Employees: ${errorMessage}`);
         }
         const data = await response.json();
         setEmployees(data);
-        // console.log(data)
         return data;
     } catch (error) {
         console.error('Error fetching Employees :', error.message);
         setEmployeesError(error.message);
-        // throw new Error(`Failed to fetch Employees : ${error.message}`);
     } finally {
         setEmployeesLoading(false);
     }
@@ -187,62 +275,115 @@ export const AllEmployees = async (setEmployees, setEmployeesLoading, setEmploye
 export const DeleteAnEmployee = async (employeeId) => {
     const url = CompanyServicesEndPoints.DELETE_AN_EMPLOYEE(employeeId);
     try {
+        const token = `Bearer ${localStorage.getItem('employeeId')}`;
         const response = await fetch(url, {
             method: 'DELETE',
             headers: {
+                'Authorization': token,
                 'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
             },
         });
         if (!response.ok) {
             const errorMessage = await response.text();
+            alert("This employee cannot be deleted because they are linked to other records in the system. Please remove or update the associated records before trying again.")
             throw new Error(`Failed to fetch Employees : ${errorMessage}`);
         }
-        // alert('done')
         const data = await response.json();
         return data;
     } catch (error) {
         console.error('Error fetching Employees :', error.message);
-        // throw new Error(`Failed to fetch Employees : ${error.message}`);
     }
 }
 
-export const GetAnEmployee = async (employeeId) => {
-    const url = CompanyServicesEndPoints.DELETE_AN_EMPLOYEE(employeeId);
+export const GetAnEmployee = async (employeeId, setUserHistoryLoading, setUserHistoryError) => {
+    const url = CompanyServicesEndPoints.EMPLOYEE_PROFILE(employeeId);
+    setUserHistoryLoading(true);
     try {
+        const token = `Bearer ${localStorage.getItem('employeeId')}`;
+
+        if (!token) throw new Error('No authentication token found');
+
         const response = await fetch(url, {
             method: 'GET',
             headers: {
+                'Authorization': token,
                 'Content-Type': 'application/json',
-            },
+                'ngrok-skip-browser-warning': 'true'
+            }
         });
         if (!response.ok) {
             const errorMessage = await response.text();
             throw new Error(`Failed to fetch Employees : ${errorMessage}`);
         }
-        // alert('done')
+
         const data = await response.json();
         return data;
     } catch (error) {
         console.error('Error fetching Employees :', error.message);
-        // throw new Error(`Failed to fetch Employees : ${error.message}`);
+        setUserHistoryError(error.message)
+
+    } finally {
+        setUserHistoryLoading(false);
     }
 }
 
+// export const GetAnEmployeeHistory = async (employeeId, setHistory, setUserHistoryLoading, setUserHistoryError) => {
+//     console.log(employeeId);
+//     const url = CompanyServicesEndPoints.EMPLOYEE_HISTORY(employeeId);
+//     console.log(url);
+//     setUserHistoryLoading(true);
+//     try {
+//         const token = `Bearer ${localStorage.getItem('employeeId')}`;
+
+//         if (!token) throw new Error('No authentication token found');
+
+//         const response = await fetch(url, {
+//             method: 'GET',
+//             headers: {
+//                 'Authorization': token,
+//                 'Content-Type': 'application/json',
+//                 'ngrok-skip-browser-warning': 'true'
+//             }
+//         });
+//         if (!response.ok) {
+//             const errorMessage = await response.text();
+//             throw new Error(`Failed to fetch Employees : ${errorMessage}`);
+//         }
+//         // alert('done')
+//         const data = await response.json();
+//         console.log("this emploee data : " + data);
+//         setHistory(data);
+//         return data;
+//     } catch (error) {
+//         console.error('Error fetching Employees :', error.message);
+//         setUserHistoryError(error.message);
+//         // throw new Error(`Failed to fetch Employees : ${error.message}`);
+//     } finally {
+//         setUserHistoryLoading(false);
+//     }
+// }
+
 export const EditEmployee = async (employeeId, employee) => {
-    // if (typeof employeeId !== 'string' && typeof employeeId !== 'number') {
-    //     console.error('Invalid employeeId:', employeeId);
-    //     throw new Error('Invalid employee ID');
-    // }
-    console.log(employeeId)
-    const url = CompanyServicesEndPoints.DELETE_AN_EMPLOYEE(employeeId);
+    const url = CompanyServicesEndPoints.EDITE_EMPLOYEE(employeeId);
 
     try {
+        const token = `Bearer ${localStorage.getItem('employeeId')}`;
+        console.log(employee);
         const response = await fetch(url, {
-            method: 'PATCH',
+            method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Authorization': token,
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
             },
-            body: JSON.stringify(employee)
+            body: JSON.stringify({
+                email: employee.Email || '',
+                name: employee.Name || '',
+                line_ID: employee.Line_ID || '',
+                roleName: employee.Role_ID || ''
+
+            }),
         });
 
         if (!response.ok) {

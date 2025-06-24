@@ -26,49 +26,50 @@ const History = ({
 
     // Filter history based on Line_ID and EngineerView
     const getBaseFilteredHistory = () => {
-        if (!history || history.length === 0) return [];
+        // if (!history || history.length === 0) return [];
 
-        if (isCompanyLogin && isEngineerView) {
-            return history.filter((e) => {
-                return e.Line_ID === Line_ID &&
-                    ((e.Defects && e.Pass_Fail?.Status === 'Pending') ||
-                        (e.Components && e.Pass_Fail?.Status === 'Pending'));
-            });
-        } else if (role === 'Leader') {
-            return history;
-        } else if (Line_ID) {
-            return history.filter((e) => e.Line_ID === Line_ID);
-        }
+        // if (isCompanyLogin && isEngineerView) {
+        //     return history.filter((e) => {
+        //         return e.Line_ID === Line_ID &&
+        //             ((e.Defects && e.Pass_Fail?.Status === 'Pending') ||
+        //                 (e.Components && e.Pass_Fail?.Status === 'Pending'));
+        //     });
+        // } else if (role === 'Leader') {
+        //     return history;
+        // } else if (Line_ID) {
+        //     return history.filter((e) => e.Line_ID === Line_ID);
+        // }
+
         return history;
     };
 
     // Apply search and Status filters
-    useEffect(() => {
-        const baseHistory = getBaseFilteredHistory();
-        let filtered = [];
+    // useEffect(() => {
+    //     const baseHistory = getBaseFilteredHistory();
+    //     let filtered = [];
 
-        if (searchQuery || filterStatus !== 'All') {
-            filtered = baseHistory.filter(item => {
-                // Status filter
-                const matchesStatus = filterStatus === 'All' ||
-                    (item.Pass_Fail && item.Pass_Fail.Status === filterStatus);
+    //     if (searchQuery || filterStatus !== 'All') {
+    //         filtered = baseHistory.filter(item => {
+    //             // Status filter
+    //             const matchesStatus = filterStatus === 'All' ||
+    //                 (item.Pass_Fail && item.Pass_Fail.Status === filterStatus);
 
-                // Search filter (check if SN exists and matches query)
-                const matchesSearch = !searchQuery ||
-                    (item.SN && item.SN.toLowerCase().includes(searchQuery.toLowerCase()));
+    //             // Search filter (check if SN exists and matches query)
+    //             const matchesSearch = !searchQuery ||
+    //                 (item.SN && item.SN.toLowerCase().includes(searchQuery.toLowerCase()));
 
-                return matchesStatus && matchesSearch;
-            });
+    //             return matchesStatus && matchesSearch;
+    //         });
 
-            // Show empty state if we have active filters but no results
-            setShowEmptyState((searchQuery || filterStatus !== 'All') && filtered.length === 0);
-        } else {
-            filtered = baseHistory;
-            setShowEmptyState(false);
-        }
+    //         // Show empty state if we have active filters but no results
+    //         setShowEmptyState((searchQuery || filterStatus !== 'All') && filtered.length === 0);
+    //     } else {
+    //         filtered = baseHistory;
+    //         setShowEmptyState(false);
+    //     }
 
-        setFilteredHistory(filtered);
-    }, [filterStatus, searchQuery, history, Line_ID, isEngineerView]);
+    //     setFilteredHistory(filtered);
+    // }, [filterStatus, searchQuery, history, Line_ID, isEngineerView]);
 
     // Error state
     if (userHistoryError) {
@@ -85,8 +86,8 @@ const History = ({
     }
 
     // Determine which history to display
-    const displayHistory = filteredHistory.length > 0 ? filteredHistory :
-        (searchQuery || filterStatus !== 'All') ? [] : getBaseFilteredHistory();
+    // const history = filteredHistory.length > 0 ? filteredHistory :
+    //     (searchQuery || filterStatus !== 'All') ? [] : getBaseFilteredHistory();
 
     return (
         <div className={`max-w-screen-xl mx-auto flex flex-col w-full h-full fixed_direction ${!isEngineerView && 'mt-7'}`}>
@@ -95,7 +96,7 @@ const History = ({
                     {!isEngineerView ? 'History' : 'Defective PCBS'}
                 </u>
                 <p className='text-lg font-[400] text-sub-text'>
-                    {displayHistory.length} Boards
+                    {history?.length} Boards
                 </p>
             </div>
 
@@ -122,34 +123,35 @@ const History = ({
                             <h1 className='text-sub-text' >No matching results found</h1>
 
                         </div>
-                    ) : displayHistory.length > 0 ? (
+                    ) : history.length > 0 ? (
                         <div className='w-full flex flex-col gap-5'>
                             {isCompanyLogin ? (
                                 <>
-                                    {role === 'Operator' && displayHistory.map((items, index) => (
+                                    {role === 'Operator' && history.map((item, index) => (
                                         <div key={index}>
                                             <OperatorHistory
-                                                image1={items.image1}
-                                                image2={items.image2}
-                                                id={items.id}
-                                                userId={items.Operator_ID}
-                                                SN={items.SN}
-                                                CreatedAt={items.CreatedAt}
-                                                Pass_Fail={items.Pass_Fail}
-                                                Engineer_ID={items.Engineer_ID}
+                                                image1={item.image1}
+                                                image2={item.image2}
+                                                id={item.id}
+                                                userId={employeeId}
+                                                SN={item?.sn || 'N/A'}
+                                                CreatedAt={item?.createdAt || ''}
+                                                Pass_Fail={item?.defectFlag ? 'Defectes' : 'No Defectes' || 'Unknown'}
+
                                             />
                                         </div>
                                     ))}
 
-                                    {isEngineerView && displayHistory.map((items, index) => (
+                                    {isEngineerView && history.map((item, index) => (
                                         <div key={index}>
                                             <HistoryComponent
-                                                SN={items.SN}
-                                                defects={items.Defects}
-                                                Components={items.Components}
-                                                image1={items.image1}
-                                                image2={items.image2}
-                                                id={items.id}
+                                                SN={item?.sn || 'N/A'}
+                                                defects={JSON.parse(item.defects)}
+                                                Components={JSON.parse(item.components)}
+                                                image1={item.image1}
+                                                image2={item.image2}
+                                                id={item.id}
+
                                                 userId={employeeId}
                                                 isCompanyLogin={isCompanyLogin}
                                                 isEngineerView={true}
@@ -158,37 +160,41 @@ const History = ({
                                         </div>
                                     ))}
 
-                                    {role === 'Engineer' && !isEngineerView && displayHistory.map((items, index) => (
+                                    {role === 'Engineer' && !isEngineerView && history.map((item, index) => (
                                         <div key={index}>
                                             <HistoryComponent
-                                                SN={items.SN}
-                                                defects={items.Defects}
-                                                Components={items.Components}
-                                                image1={items.image1}
-                                                image2={items.image2}
-                                                id={items.id}
+                                                SN={item?.sn || 'N/A'}
+                                                defects={item?.defects ? JSON.parse(item.defects) : {}}
+                                                Components={item?.components ? JSON.parse(item.components) : {}}
+                                                image1={item.image1}
+                                                image2={item.image2}
+                                                id={item.id}
+
                                                 userId={employeeId}
                                                 isCompanyLogin={isCompanyLogin}
                                                 role={role}
                                                 isEngineerView={false}
-                                                Pass_Fail={items.Pass_Fail}
+                                                Pass_Fail={item.passFailStatus}
                                             />
                                         </div>
                                     ))}
 
-                                    {role === 'Leader' && displayHistory.map((items, index) => (
+                                    {role === 'Leader' && history.map((item, index) => (
                                         <div key={index}>
+
                                             <HistoryComponent
-                                                SN={items.SN}
-                                                Operator_ID={items.Operator_ID}
-                                                Engineer_ID={items.Engineer_ID}
-                                                CreatedAt={items.CreatedAt}
-                                                Pass_Fail={items.Pass_Fail}
-                                                defects={items.Defects}
-                                                Components={items.Components}
-                                                image1={items.image1}
-                                                image2={items.image2}
-                                                id={items.id}
+                                                SN={item?.sn || 'N/A'}
+                                                Operator_ID={item?.operator || {}}
+                                                Engineer_ID={item?.engineer || {}}
+                                                CreatedAt={item?.createdAt || ''}
+                                                Pass_Fail={item?.passFailStatus ? 'Pass' : 'Repair' || 'Unknown'}
+                                                defects={item?.defects ? JSON.parse(item.defects) : {}}
+                                                Components={item?.components ? JSON.parse(item.components) : {}}
+                                                image1={item?.image1 || null}
+                                                image2={item?.image2 || null}
+
+                                                passFailTime={item?.passFailTime}
+                                                id={item?.id}
                                                 userId={employeeId}
                                                 isCompanyLogin={isCompanyLogin}
                                                 role={role}
@@ -198,7 +204,7 @@ const History = ({
                                     ))}
                                 </>
                             ) : (
-                                displayHistory.map((items, index) => (
+                                history.map((items, index) => (
                                     <div key={index}>
                                         <HistoryComponent
                                             defects={items.Defects}

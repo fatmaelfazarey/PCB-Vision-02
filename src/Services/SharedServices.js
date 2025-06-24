@@ -1,22 +1,32 @@
 import { SharedServicesEndPoints } from "./EndPoints";
 
 export const AddNewPCB = async (pcbData, isCompanyLogin) => {
-    const url = isCompanyLogin ? SharedServicesEndPoints.ADD_NEW_PCB_COMPANY_URL() : SharedServicesEndPoints.ADD_NEW_PCB_USER_URL();
+    const url = SharedServicesEndPoints.ADD_NEW_PCB_COMPANY_URL;
     try {
+        const token = `Bearer ${localStorage.getItem('employeeId')}`;
         const response = await fetch(url, {
             method: 'POST',
             headers: {
+                'Authorization': token,
                 'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
             },
-            body: JSON.stringify(pcbData),
+            body: JSON.stringify({
+                sn: pcbData.SN || '',
+                image1: pcbData.image1 || '',
+                image2: pcbData.image2 || ''
+
+            }),
         });
         if (!response.ok) {
             const errorMessage = await response.text();
             throw new Error(`Failed to add PCB: ${errorMessage}`);
         }
-        let data = await response.json();
-
-        return data;
+        const data = await response.json();
+        return {
+            defectFlag: data.defectFlag,
+            pcbId: data.pcbId 
+        };
     } catch (error) {
         console.error('Error adding PCB:', error.message);
         setError(error.message);
@@ -52,16 +62,26 @@ export const DeletePCB = async (pcbId, isCompanyLogin) => {
 export const UpdateUserInfo = async (isCompanyLogin, id, userData, setShowToast, handleShowToast) => {
 
     const url = isCompanyLogin
-        ? SharedServicesEndPoints.UPDATE_USER_INFO_COMPANY_URL(id)
-        : SharedServicesEndPoints.UPDATE_USER_INFO_USER_URL(id);
+        ? SharedServicesEndPoints.UPDATE_USER_INFO_COMPANY_URL
+        : SharedServicesEndPoints.UPDATE_USER_INFO_USER_URL;
 
     try {
+        const token = `Bearer ${localStorage.getItem('userId')}`; 
+
         const response = await fetch(url, {
-            method: "PATCH",
+            method: "PUT",
             headers: {
-                "Content-Type": "application/json",
+                'Authorization': token,
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
             },
-            body: JSON.stringify(userData),
+            body: JSON.stringify({
+                name: userData.Name || '',
+                dateOfBirth: userData.Date_of_Birth || '',
+                phone: userData.Phone || '',
+                email: userData.Email || ''
+
+            }),
         });
 
         if (!response.ok) {

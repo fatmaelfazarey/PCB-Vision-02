@@ -24,13 +24,13 @@ const CompanyProfile = () => {
 
                     isCompanyLogin={true}
                     id={employeeId}
-                    image={employee.Image}
-                    name={employee.Name}
-                    email={employee.Email}
-                    phone={employee.Phone}
-                    Date_of_Birth={employee.Date_of_Birth}
-                    Line_ID={employee.Line_ID}
-                    Password={employee.Password}
+                    image={employee.image}
+                    name={employee.name}
+                    email={employee.email}
+                    phone={employee.phone}
+                    Date_of_Birth={employee.date_of_Birth}
+                    Line_ID={employee.line_ID}
+                    Password={employee.password}
                 />
             }
             {

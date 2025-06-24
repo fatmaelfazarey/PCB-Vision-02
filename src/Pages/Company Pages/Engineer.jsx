@@ -8,7 +8,8 @@ import Loading from '../../Shared/Loading/Loading';
 
 const Engineer = () => {
     const { employeeId, employee, role, employeeLoading, employeeError } = useContext(CompanyContext);
-    const { PCBS, PCBSLoading, PCBSError } = useContext(CompanyContext);
+    // const { PCBS, PCBSLoading, PCBSError } = useContext(CompanyContext);
+    const { PendingPCBS, PendingPCBSLoading, PendingPCBSError } = useContext(CompanyContext);
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Engineer = () => {
 
     return (
         <div className='pl-2.5 pr-2.5 min-h-lvh fixed_direction'>
-             {employeeLoading && <Loading />}
+            {employeeLoading && <Loading />}
             {
                 employee && <SecondHeader
                     isCompanyLogin={true}
@@ -43,9 +44,9 @@ const Engineer = () => {
                         isHistory={false}
                         employeeId={employeeId}
                         Line_ID={employee && employee.Line_ID}
-                        history={PCBS}
-                        userHistoryLoading={PCBSLoading}
-                        userHistoryError={PCBSError}
+                        history={PendingPCBS}
+                        userHistoryLoading={PendingPCBSLoading}
+                        userHistoryError={PendingPCBSError}
                         navigateTo={`/${employee.Role_ID}/${employeeId}`}
                     />
                 )}

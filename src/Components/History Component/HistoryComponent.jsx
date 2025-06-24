@@ -19,7 +19,8 @@ const HistoryComponent = ({
     Operator_ID,
     Engineer_ID,
     CreatedAt,
-    Pass_Fail
+    Pass_Fail,
+    passFailTime
 }) => {
     const [isHover, setIsHover] = useState(false);
     const [isBtnHovered, setIsBtnHovered] = useState(true);
@@ -28,6 +29,9 @@ const HistoryComponent = ({
     const [useMagnify, setUseMagnify] = useState(false);
     const [hidePCB, setHidePCB] = useState();
     // Toast Utilities
+
+
+
     const showToastMessage = (message) => {
         setToastMessage(message);
         setShowToast(true);
@@ -42,21 +46,21 @@ const HistoryComponent = ({
         if (success) showToastMessage('PCB deleted successfully. Please reload the page.');
     };
 
-    const updatePassFailStatus = async (pcbId, status) => {
-        const passFailUpdate = {
-            Engineer_ID: userId,
-            Pass_Fail: {
-                Modified_By: userId,
-                Status: status,
-                Modified_Time: GetCurrentDateTime()
-            }
-        };
-        StatusUpdate(pcbId, passFailUpdate);
-        // if (StatusUpdate(pcbId, passFailUpdate)) window.location.reload();
-    };
+    // const updatePassFailStatus = async (pcbId, status) => {
+    //     const passFailUpdate = {
+    //         Engineer_ID: userId,
+    //         Pass_Fail: {
+    //             Modified_By: userId,
+    //             Status: status,
+    //             Modified_Time: GetCurrentDateTime()
+    //         }
+    //     };
+    //     StatusUpdate(pcbId, passFailUpdate);
+    //     // if (StatusUpdate(pcbId, passFailUpdate)) window.location.reload();
+    // };
 
-    const handlePass = (pcbId) => { updatePassFailStatus(pcbId, 'Pass'); setHidePCB(pcbId) };
-    const handleRepair = (pcbId) => { updatePassFailStatus(pcbId, 'Repair'); setHidePCB(pcbId) };
+    const handlePass = (pcbId) => { StatusUpdate(pcbId, true); setHidePCB(pcbId) };
+    const handleRepair = (pcbId) => { StatusUpdate(pcbId, false); setHidePCB(pcbId) };
 
     return (
         <div
@@ -77,10 +81,11 @@ const HistoryComponent = ({
                         isCompanyLogin={isCompanyLogin}
                         SN={SN || ''}
                         role={role || ''}
-                        Operator_ID={Operator_ID || ''}
-                        Engineer_ID={Engineer_ID || ''}
+                        Operator_ID={Operator_ID?.userName}
+                        Engineer_ID={Engineer_ID?.userName}
                         CreatedAt={CreatedAt || ''}
-                        Pass_Fail={Pass_Fail || {}}
+                        Pass_Fail={Pass_Fail || ''}
+                        passFailTime={passFailTime}
                         isEngineerView={isEngineerView}
                         magnify={useMagnify}
                         hidePCB={hidePCB === id}
@@ -98,7 +103,8 @@ const HistoryComponent = ({
                 )}
 
                 <div className={`flex gap-2 absolute right-[50%] top-[-10px] translate-x[50%] bg-second dark:bg-second-dark cursor-pointer px-4 py-2 rounded-full shadow-xl ${isHover ? 'opacity-100' : 'opacity-0'} `}>
-                    {(!isCompanyLogin || (isCompanyLogin && role === 'Leader')) && (
+                    {( (isCompanyLogin && role === 'Leader')) && (
+                    // {/* {(!isCompanyLogin || (isCompanyLogin && role === 'Leader')) && ( */}
                         <div
                             title="Delete"
                             onClick={() => handleDelete(id, isCompanyLogin)}

@@ -5,7 +5,6 @@ import BoundingBox from './BoundingBox';
 
 const DisplayResponseAndHistoryComp = (props) => {
     let noDefects = false;
-
     //#region Display PCBS information for each role
     const ShowDefectsInfo = (defects) => {
         const [displayedAbout, setDisplayedAbout] = useState(null);
@@ -40,7 +39,8 @@ const DisplayResponseAndHistoryComp = (props) => {
     };
 
     const ShowComponentsInfo = (components) => {
-        if (Object.keys(components.statistics).length === 0) {
+
+        if (Object.keys(components?.statistics).length === 0) {
             noDefects = true;
             return <p className='w-full text-center text-lg font-[400] text-sub-text'>{('No Components')}</p>;
         }
@@ -104,53 +104,53 @@ const DisplayResponseAndHistoryComp = (props) => {
     const LeaderHistory = () => {
         return (
             <>
-                <p className='text-xl text-title'>Operator : {o_name || props.Operator_ID} </p>
+                <p className='text-xl text-title'>Operator : {props.Operator_ID} </p>
                 <p className='text-xl text-title'>Created At : {props.CreatedAt} </p>
-                <p className='text-xl text-title'>{!noDefects && 'Status :' + props.Pass_Fail.Status} </p>
-                <p className='text-xl text-title'>{!noDefects && 'Engineer :' + e_name || props.Pass_Fail.Modified_By} </p>
-                <p className='text-xl text-title'>{!noDefects && 'Modified Time :' + props.Pass_Fail.Modified_Time} </p></>
+                <p className='text-xl text-title'>{!noDefects && 'Status :' + props.Pass_Fail} </p>
+                <p className='text-xl text-title'>{!noDefects && 'Engineer :' + props.Engineer_ID} </p>
+                <p className='text-xl text-title'>{!noDefects && 'Modified Time :' + props.passFailTime} </p></>
         )
     }
 
     const EngineerHistory = () => {
         return (
             <>
-                <p className='text-xl text-title'>{!noDefects && 'Status :' + props.Pass_Fail.Status} </p>
-                <p className='text-xl text-title'>{!noDefects && 'Modified Time :' + props.Pass_Fail.Modified_Time} </p>
+                <p className='text-xl text-title'>{!noDefects && 'Status :' + props.Pass_Fail} </p>
+                <p className='text-xl text-title'>{!noDefects && 'Modified Time :' + props.passFailTime} </p>
             </>
         )
     }
     //#endregion
 
     //#region get name Cancel when connecting to backend server
-    const getName = async (id, setName) => {
-        const url = `http://localhost:3002/employees/${id}`;
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error('Failed to fetch users');
-            }
-            const users = await response.json();
-            if (users) {
-                setName(users.Name);
-                return users.Name;
-            } else {
-                alert("Invalid user. Please try again.");
-                return null;
-            }
-        } catch (error) {
-            console.error('Error logging in:', error);
-        }
-    };
-    const [e_name, setE_name] = useState();
-    const [o_name, setO_name] = useState();
-    useEffect(() => {
-        if (props.Engineer_ID || props.Operator_ID) {
+    // const getName = async (id, setName) => {
+    //     const url = `http://localhost:3002/employees/${id}`;
+    //     try {
+    //         const response = await fetch(url);
+    //         if (!response.ok) {
+    //             throw new Error('Failed to fetch users');
+    //         }
+    //         const users = await response.json();
+    //         if (users) {
+    //             setName(users.Name);
+    //             return users.Name;
+    //         } else {
+    //             alert("Invalid user. Please try again.");
+    //             return null;
+    //         }
+    //     } catch (error) {
+    //         console.error('Error logging in:', error);
+    //     }
+    // };
+    // const [e_name, setE_name] = useState();
+    // const [o_name, setO_name] = useState();
+    // useEffect(() => {
+    //     if (props.Engineer_ID || props.Operator_ID) {
 
-            getName(props.Engineer_ID, setE_name);
-            getName(props.Operator_ID, setO_name);
-        }
-    })
+    //         getName(props.Engineer_ID, setE_name);
+    //         getName(props.Operator_ID, setO_name);
+    //     }
+    // })
 
     //#endregion
 

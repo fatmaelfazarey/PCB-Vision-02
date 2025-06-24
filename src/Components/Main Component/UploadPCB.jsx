@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import AddPCBImage from '../../Shared/AddPCBImage';
 import { AppContext } from '../../Context/AppContext';
 import { AddNewPCB } from '../../Services/SharedServices';
-import { handleDefectsDetection, handleComponentsDetection } from '../../Services/AIRequestService';
+import { handleDefectsDetection, handleComponentsDetection, handleDefectsAndComponents } from '../../Services/AIRequestService';
 import Response from './Response';
 
 const UploadPCB = ({ isGuest }) => {
@@ -52,9 +52,9 @@ const UploadPCB = ({ isGuest }) => {
 
                 await handleComponentsDetection(formData.image2, setFormData, false);
             } else if (formData.image1 && formData.image2) {
-
-                await handleDefectsDetection(formData.image1, setFormData, false);
-                await handleComponentsDetection(formData.image2, setFormData, false);
+                await handleDefectsAndComponents(formData.image1, formData.image2, setFormData, false)
+                // await handleDefectsDetection(formData.image1, setFormData, false);
+                // await handleComponentsDetection(formData.image2, setFormData, false);
             }
             // setResponseData(formData);
 
@@ -88,7 +88,7 @@ const UploadPCB = ({ isGuest }) => {
     }
     const saveData = async () => {
         try {
-            await AddNewPCB(formData, false);
+            // await AddNewPCB(formData, false);
             setResponseData(formData);
 
         } catch (e) {
@@ -136,7 +136,7 @@ const UploadPCB = ({ isGuest }) => {
                         type='reset'
                         value={t('Reset')}
                         onClick={resetForm}
-                        
+
                         className={`bg-white dark:bg-black text-main border font-bold py-2 px-4 rounded-xl transition hover:bg-main hover:opacity-100 hover:text-white hover:dark:text-black `}
                     />
                     <input

@@ -7,7 +7,7 @@ import Toast from '../../../Shared/Toast/Toast';
 
 const EmployeesListComponent = () => {
     const navigate = useNavigate()
-    const { Employees, EmployeesLoading, EmployeesError, setIsEmployeeEditMode, setEditEmployee, employeeId } = useContext(CompanyContext)
+    const { Employees, EmployeesLoading, EmployeesError, setIsEmployeeEditMode, setEditEmployee, employeeId, employee } = useContext(CompanyContext)
 
     const handleDelete = async (employeeId) => {
         if (!window.confirm('Do you want to delete this Employee ?')) return;
@@ -76,73 +76,73 @@ const EmployeesListComponent = () => {
 
 
             {Employees && Employees.length > 0 ? (
-                <div className="overflow-x-auto bg-white dark:bg-gray-900 rounded-xl shadow">
+                <div className="overflow-x-auto  rounded-xl shadow">
                     <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                        <thead className="bg-gray-50 dark:bg-gray-800">
+                        <thead className="bg-second dark:bg-second-dark">
                             <tr>
-                                <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-center text-xs font-medium text-title dark:text-gray-300 uppercase tracking-wider">
                                     #
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-title dark:text-gray-300 uppercase tracking-wider">
                                     Name
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-title dark:text-gray-300 uppercase tracking-wider">
                                     Email
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-title dark:text-gray-300 uppercase tracking-wider">
                                     Password
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-title dark:text-gray-300 uppercase tracking-wider">
                                     Phone
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-title dark:text-gray-300 uppercase tracking-wider">
                                     Role
                                 </th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-title dark:text-gray-300 uppercase tracking-wider">
                                     Line
                                 </th>
                             </tr>
                         </thead>
-                        <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                            {Employees.map((emp, i) => (employeeId !== emp.id && (
+                        <tbody className=" divide-y divide-second dark:divide-second-dark">
+                            {Employees.map((emp, i) => (employee.id !== emp.id && (
                                 <tr
                                     key={i}
                                     onClick={() => { setEditEmployee(emp); navigate(`${emp.id}`); }}
-                                    className="hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors"
+                                    className="hover:bg-second dark:hover:bg-second-dark cursor-pointer transition-colors"
                                 >
 
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-gray-500 dark:text-gray-300">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-title dark:text-gray-300">
                                         {i + 1}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <div className="flex items-center space-x-3">
                                             <img
                                                 src={emp.Image || assets.add_user}
-                                                alt={emp.Name}
+                                                alt={emp.name}
                                                 className="h-10 w-10 rounded-full object-cover"
                                                 onError={(e) => (e.target.src = assets.add_user)}
                                             />
                                             <span className="text-gray-900 dark:text-white">
-                                                {emp.Name}
+                                                {emp.name}
                                             </span>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-500 dark:text-gray-300">
-                                        {emp.Email}
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-title dark:text-gray-300">
+                                        {emp.email}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-500 dark:text-gray-300">
-                                        {emp.Password}
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-title dark:text-gray-300">
+                                        {emp.password}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-500 dark:text-gray-300">
-                                        {emp.Phone}
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-title dark:text-gray-300">
+                                        {emp.phone}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-500 dark:text-gray-300">
-                                        {emp.Role_ID}
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-title dark:text-gray-300">
+                                        {emp.roleName}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-500 dark:text-gray-300">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-title dark:text-gray-300">
                                         {emp.Line_ID}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-500 dark:text-gray-300" onClick={(e) => { e.stopPropagation(); handleEdit(emp); }}>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-title dark:text-gray-300" onClick={(e) => { e.stopPropagation(); handleEdit(emp); }}>
 
                                         <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
                                             width="25px" height="25px" viewBox="0 0 494.936 494.936"
@@ -162,7 +162,7 @@ const EmployeesListComponent = () => {
                                                 </g>
                                             </g>
                                         </svg>    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-gray-500 dark:text-gray-300" onClick={(e) => { e.stopPropagation(); handleDelete(emp.id) }}>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm  text-title dark:text-gray-300" onClick={(e) => { e.stopPropagation(); handleDelete(emp.id) }}>
                                         <svg fill="#8B0000" width="25px" height="25px" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path d="M831.24 280.772c5.657 0 10.24-4.583 10.24-10.24v-83.528c0-5.657-4.583-10.24-10.24-10.24H194.558a10.238 10.238 0 00-10.24 10.24v83.528c0 5.657 4.583 10.24 10.24 10.24H831.24zm0 40.96H194.558c-28.278 0-51.2-22.922-51.2-51.2v-83.528c0-28.278 22.922-51.2 51.2-51.2H831.24c28.278 0 51.2 22.922 51.2 51.2v83.528c0 28.278-22.922 51.2-51.2 51.2z" /><path d="M806.809 304.688l-58.245 666.45c-.544 6.246-6.714 11.9-12.99 11.9H290.226c-6.276 0-12.447-5.654-12.99-11.893L218.99 304.688c-.985-11.268-10.917-19.604-22.185-18.619s-19.604 10.917-18.619 22.185l58.245 666.45c2.385 27.401 26.278 49.294 53.795 49.294h445.348c27.517 0 51.41-21.893 53.796-49.301l58.244-666.443c.985-11.268-7.351-21.201-18.619-22.185s-21.201 7.351-22.185 18.619zM422.02 155.082V51.3c0-5.726 4.601-10.342 10.24-10.342h161.28c5.639 0 10.24 4.617 10.24 10.342v103.782c0 11.311 9.169 20.48 20.48 20.48s20.48-9.169 20.48-20.48V51.3c0-28.316-22.908-51.302-51.2-51.302H432.26c-28.292 0-51.2 22.987-51.2 51.302v103.782c0 11.311 9.169 20.48 20.48 20.48s20.48-9.169 20.48-20.48z" /><path d="M496.004 410.821v460.964c0 11.311 9.169 20.48 20.48 20.48s20.48-9.169 20.48-20.48V410.821c0-11.311-9.169-20.48-20.48-20.48s-20.48 9.169-20.48 20.48zm-192.435 1.767l39.936 460.964c.976 11.269 10.903 19.612 22.171 18.636s19.612-10.903 18.636-22.171l-39.936-460.964c-.976-11.269-10.903-19.612-22.171-18.636s-19.612 10.903-18.636 22.171zm377.856-3.535l-39.936 460.964c-.976 11.269 7.367 21.195 18.636 22.171s21.195-7.367 22.171-18.636l39.936-460.964c.976-11.269-7.367-21.195-18.636-22.171s-21.195 7.367-22.171 18.636z" /></svg>
                                     </td>
                                 </tr>)
@@ -172,7 +172,7 @@ const EmployeesListComponent = () => {
                 </div>
             ) : (
                 <div className="bg-white dark:bg-gray-900 rounded-xl shadow p-8 text-center">
-                    <p className="text-gray-500 dark:text-gray-400">No employees found</p>
+                    <p className="text-title dark:text-gray-400">No employees found</p>
                 </div>
             )
             }

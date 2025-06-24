@@ -12,7 +12,7 @@
     "Create Account": "Create Account",
     "Login Company": "Login Company",
     "Login ": "Login ",
-     "Login": "Login",
+    "Login": "Login",
     "About Us": "About Us",
     "PCB Vision is our graduation project from the Faculty of Engineering, Computer and Systems Department at Fayoum University.We are dedicated to developing intelligent solutions for detecting defects in printed circuit boards (PCBs) using artificial intelligence and machine learning technologies.": "PCB Vision is our graduation project from the Faculty of Engineering, Computer and Systems Department at Fayoum University.We are dedicated to developing intelligent solutions for detecting defects in printed circuit boards (PCBs) using artificial intelligence and machine learning technologies.",
     "Our Goal": "Our goal",
@@ -76,7 +76,7 @@
     "The Egyptian Phone number must consist of 11 digits": "The Egyptian Phone number must consist of 11 digits",
     "Company Account Login": "Company Account Login",
     "Remember me": "Remember me",
-    "You don't have an account? ":"You don't have an account? ",
+    "You don't have an account? ": "You don't have an account? ",
     "personal account": "personal account",
     "company account": "company account",
     "Forgot password?": "Forgot password?",
@@ -89,8 +89,10 @@
     "You do not have permission to access this page.": "You do not have permission to access this page.",
     "The server is currently unavailable. Please try again later.": "The server is currently unavailable. Please try again later.",
     "Make sure the server is running and your internet connection is stable.": "Make sure the server is running and your internet connection is stable.",
-    "Verify Account":"Verify Account",
-    "Update Password":"Update Password",
-    "Processing...":"Processing...",
-    "New Password":"New Password"
+    "Verify Account": "Verify Account",
+    "Update Password": "Update Password",
+    "Processing...": "Processing...",
+    "New Password": "New Password",
+    "User Name": "User Name",
+    "Username should not contain spaces": "Username should not contain spaces"
 }

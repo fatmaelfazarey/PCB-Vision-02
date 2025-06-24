@@ -10,20 +10,22 @@ const SignComponent = () => {
     const [hiddenPassword, setHiddenPassword] = useState(true);
     const [hiddenConfirmPassword, setHiddenConfirmPassword] = useState(true);
     const [formData, setFormData] = useState({
-        Name: "",
-        Email: "",
-        Phone: "",
-        Password: "",
-        ConfirmPassword: "",
-        Image: ""
+        name: "",
+        email: "",
+        phone: "",
+        dateOfBirth: "2025-06-20T13:54:08.429Z",
+        password: "",
+        confirmPassword: "",
+        // Image: ""
     });
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
     // Regex patterns for validation
-    const EmailReg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const emailReg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     const phoneRegex = /^01\d{9}$/;
     const PasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    const usernameRegex = /^\S+$/;
 
     // Handle input changes
     const handleChange = (e) => {
@@ -33,11 +35,12 @@ const SignComponent = () => {
     // Validate form inputs
     const validate = () => {
         let newErrors = {};
-        if (!formData.Name.trim()) newErrors.Name = "Name is required";
-        if (!EmailReg.test(formData.Email)) newErrors.Email = "Invalid Email format, userName@example.com";
-        if (!phoneRegex.test(formData.Phone)) newErrors.Phone = "The Egyptian Phone number must consist of 11 digits";
-        if (!PasswordPattern.test(formData.Password)) newErrors.Password = "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.";
-        if (formData.Password !== formData.ConfirmPassword) newErrors.ConfirmPassword = "Passwords do not match";
+        // if (!formData.name.trim()) newErrors.name = "Name is required";
+        if (!usernameRegex.test(formData.name)) newErrors.name = "Username should not contain spaces";
+        if (!emailReg.test(formData.email)) newErrors.email = "Invalid email format, userName@example.com";
+        if (!phoneRegex.test(formData.phone)) newErrors.phone = "The Egyptian phone number must consist of 11 digits";
+        if (!PasswordPattern.test(formData.password)) newErrors.password = "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.";
+        if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords do not match";
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -51,6 +54,7 @@ const SignComponent = () => {
             AddNewUser(formData)
                 .then(() => {
                     alert(t('Form submitted successfully, You can log in now! ✅'));
+                    console.log(formData);
                     navigate('/login');
                 })
                 .catch((error) => {
@@ -60,12 +64,13 @@ const SignComponent = () => {
 
             // Reset form data
             setFormData({
-                Name: "",
-                Email: "",
-                Phone: "",
-                Password: "",
-                ConfirmPassword: "",
-                Image: ""
+                name: "",
+                email: "",
+                phone: "",
+                dateOfBirth: "2025-06-20T13:54:08.429Z",
+                password: "",
+                confirmPassword: "",
+                // Image: ""
             });
         }
     };
@@ -81,56 +86,56 @@ const SignComponent = () => {
                 <form onSubmit={handleSubmit} className='flex flex-col w-full gap-3 mt-4 mb-4 items-end'>
                     {/* Full Name Field */}
                     <div className='flex flex-col w-full'>
-                        <label htmlFor="Name" className={`text-sub-text block text-sm`}>{t('Full Name')}</label>
+                        <label htmlFor="name" className={`text-sub-text block text-sm`}>{t('User Name')}</label>
                         <input
-                            value={formData.Name}
-                            id='Name'
-                            name="Name"
+                            value={formData.name}
+                            id='name'
+                            name="name"
                             type='text'
                             onChange={handleChange}
                             className={`w-full rounded-xl outline-0 caret-main p-2 bg-second dark:bg-second-dark font-[400] dark:text-white`}
                         />
-                        {errors.Name && <span className="text-red-500 text-[.6rem]">{t(errors.Name)}</span>}
+                        {errors.name && <span className="text-red-500 text-[.6rem]">{t(errors.name)}</span>}
                     </div>
 
-                    {/* Email Field */}
+                    {/* email Field */}
                     <div className='flex flex-col w-full'>
-                        <label htmlFor="Email" className={`text-sub-text block text-sm`}>{t('Email')}</label>
+                        <label htmlFor="email" className={`text-sub-text block text-sm`}>{t('Email')}</label>
                         <input
-                            value={formData.Email}
-                            id='Email'
-                            name="Email"
+                            value={formData.email}
+                            id='email'
+                            name="email"
                             type='text'
                             onChange={handleChange}
                             className={`w-full rounded-xl outline-0 caret-main p-2 bg-second dark:bg-second-dark font-[400] dark:text-white`}
                         />
-                        {errors.Email && <span className="text-red-500 text-[.6rem]">{t(errors.Email)}</span>}
+                        {errors.email && <span className="text-red-500 text-[.6rem]">{t(errors.email)}</span>}
                     </div>
 
-                    {/* Phone Field */}
+                    {/* phone Field */}
                     <div className='flex flex-col w-full'>
-                        <label htmlFor="Phone" className={`text-sub-text block text-sm`}>{t('Phone')}</label>
+                        <label htmlFor="phone" className={`text-sub-text block text-sm`}>{t('Phone')}</label>
                         <input
-                            id='Phone'
-                            value={formData.Phone}
-                            name="Phone"
+                            id='phone'
+                            value={formData.phone}
+                            name="phone"
                             type='tel'
                             onChange={handleChange}
                             className={`w-full rounded-xl outline-0 caret-main p-2 bg-second dark:bg-second-dark font-[400] dark:text-white`}
                         />
-                        {errors.Phone && <span className="text-red-500 text-[.6rem]">{t(errors.Phone)}</span>}
+                        {errors.phone && <span className="text-red-500 text-[.6rem]">{t(errors.phone)}</span>}
                     </div>
 
                     {/* Password Field */}
                     <div className='flex flex-col w-full'>
-                        <label htmlFor="Password" className={`text-sub-text block text-sm`}>{t('Password')}</label>
+                        <label htmlFor="password" className={`text-sub-text block text-sm`}>{t('Password')}</label>
                         <div className='relative'>
                             <>
                                 <input
-                                    value={formData.Password}
-                                    id='Password'
-                                    type={hiddenPassword? 'password':'text'}
-                                    name='Password'
+                                    value={formData.password}
+                                    id='password'
+                                    type={hiddenPassword ? 'password' : 'text'}
+                                    name='password'
                                     onChange={handleChange}
                                     className={`w-full rounded-xl outline-0 caret-main p-2 bg-second dark:bg-second-dark font-[400] dark:text-white`}
                                 />
@@ -152,7 +157,7 @@ const SignComponent = () => {
                             </>
 
                         </div>
-                        {errors.Password && <span className="text-red-500 text-[.6rem]">{t(errors.Password)}</span>}
+                        {errors.password && <span className="text-red-500 text-[.6rem]">{t(errors.password)}</span>}
                     </div>
 
                     {/* Confirm Password Field */}
@@ -161,8 +166,8 @@ const SignComponent = () => {
                         <div className='relative'>
                             <input
                                 id='confirmPass'
-                                value={formData.ConfirmPassword}
-                                name="ConfirmPassword"
+                                value={formData.confirmPassword}
+                                name="confirmPassword"
                                 type={hiddenConfirmPassword ? 'password' : 'text'}
                                 onChange={handleChange}
                                 className={`w-full rounded-xl outline-0 caret-main p-2 bg-second dark:bg-second-dark font-[400] dark:text-white`}
@@ -182,7 +187,7 @@ const SignComponent = () => {
                                 }
                             </button>
                         </div>
-                        {errors.ConfirmPassword && <span className="text-red-500 text-[.6rem]">{t(errors.ConfirmPassword)}</span>}
+                        {errors.confirmPassword && <span className="text-red-500 text-[.6rem]">{t(errors.confirmPassword)}</span>}
                     </div>
                     {/* Submit Button */}
                     <input

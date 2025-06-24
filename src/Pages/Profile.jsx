@@ -21,11 +21,11 @@ const Profile = () => {
                 user && <UserInformation
                     isCompanyLogin={false}
                     id={userId}
-                    image={user.Image}
-                    name={user.Name}
-                    email={user.Email}
-                    phone={user.Phone}
-                    password={user.Password}
+                    image={user.image}
+                    name={user.name}
+                    email={user.email}
+                    phone={user.phone}
+                    password={user.password}
                 />
             }
             {user && <History
