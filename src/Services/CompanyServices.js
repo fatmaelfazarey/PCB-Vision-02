@@ -80,7 +80,7 @@ export const LoginAsCompany = async (email, password, setEmployee, setEmployeeId
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                name: email,
+                email: email,
                 password: password
             }),
         });
@@ -289,16 +289,17 @@ export const DeleteAnEmployee = async (employeeId) => {
             alert("This employee cannot be deleted because they are linked to other records in the system. Please remove or update the associated records before trying again.")
             throw new Error(`Failed to fetch Employees : ${errorMessage}`);
         }
-        const data = await response.json();
-        return data;
+        // const data = await response.json();
+        return true;
     } catch (error) {
         console.error('Error fetching Employees :', error.message);
     }
 }
 
-export const GetAnEmployee = async (employeeId, setUserHistoryLoading, setUserHistoryError) => {
+// export const GetAnEmployee = async (employeeId, setUserHistoryLoading, setUserHistoryError) => {
+export const GetAnEmployee = async (employeeId) => {
     const url = CompanyServicesEndPoints.EMPLOYEE_PROFILE(employeeId);
-    setUserHistoryLoading(true);
+    // setUserHistoryLoading(true);
     try {
         const token = `Bearer ${localStorage.getItem('employeeId')}`;
 
@@ -321,55 +322,55 @@ export const GetAnEmployee = async (employeeId, setUserHistoryLoading, setUserHi
         return data;
     } catch (error) {
         console.error('Error fetching Employees :', error.message);
-        setUserHistoryError(error.message)
+        // setUserHistoryError(error.message)
 
+    } finally {
+        // setUserHistoryLoading(false);
+    }
+}
+
+export const GetAnEmployeeHistory = async (employeeId, setHistory, setUserHistoryLoading, setUserHistoryError) => {
+
+    const url = CompanyServicesEndPoints.EMPLOYEE_HISTORY(employeeId);
+
+    setUserHistoryLoading(true);
+    try {
+        const token = `Bearer ${localStorage.getItem('employeeId')}`;
+
+        if (!token) throw new Error('No authentication token found');
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': token,
+                'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
+            }
+        });
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`Failed to fetch Employees : ${errorMessage}`);
+        }
+        // alert('done')
+        const data = await response.json();
+        // console.log("this emploee data : " + data);
+        setHistory(data);
+        return data;
+    } catch (error) {
+        console.error('Error fetching Employees :', error.message);
+        setUserHistoryError(error.message);
+        // throw new Error(`Failed to fetch Employees : ${error.message}`);
     } finally {
         setUserHistoryLoading(false);
     }
 }
-
-// export const GetAnEmployeeHistory = async (employeeId, setHistory, setUserHistoryLoading, setUserHistoryError) => {
-//     console.log(employeeId);
-//     const url = CompanyServicesEndPoints.EMPLOYEE_HISTORY(employeeId);
-//     console.log(url);
-//     setUserHistoryLoading(true);
-//     try {
-//         const token = `Bearer ${localStorage.getItem('employeeId')}`;
-
-//         if (!token) throw new Error('No authentication token found');
-
-//         const response = await fetch(url, {
-//             method: 'GET',
-//             headers: {
-//                 'Authorization': token,
-//                 'Content-Type': 'application/json',
-//                 'ngrok-skip-browser-warning': 'true'
-//             }
-//         });
-//         if (!response.ok) {
-//             const errorMessage = await response.text();
-//             throw new Error(`Failed to fetch Employees : ${errorMessage}`);
-//         }
-//         // alert('done')
-//         const data = await response.json();
-//         console.log("this emploee data : " + data);
-//         setHistory(data);
-//         return data;
-//     } catch (error) {
-//         console.error('Error fetching Employees :', error.message);
-//         setUserHistoryError(error.message);
-//         // throw new Error(`Failed to fetch Employees : ${error.message}`);
-//     } finally {
-//         setUserHistoryLoading(false);
-//     }
-// }
 
 export const EditEmployee = async (employeeId, employee) => {
     const url = CompanyServicesEndPoints.EDITE_EMPLOYEE(employeeId);
 
     try {
         const token = `Bearer ${localStorage.getItem('employeeId')}`;
-        console.log(employee);
+        // console.log(employee);
         const response = await fetch(url, {
             method: 'PUT',
             headers: {

@@ -103,8 +103,8 @@ const HistoryComponent = ({
                 )}
 
                 <div className={`flex gap-2 absolute right-[50%] top-[-10px] translate-x[50%] bg-second dark:bg-second-dark cursor-pointer px-4 py-2 rounded-full shadow-xl ${isHover ? 'opacity-100' : 'opacity-0'} `}>
-                    {( (isCompanyLogin && role === 'Leader')) && (
-                    // {/* {(!isCompanyLogin || (isCompanyLogin && role === 'Leader')) && ( */}
+                    {/* {( (isCompanyLogin && role === 'Leader')) && ( */}
+                    {(!isCompanyLogin || (isCompanyLogin && role === 'Leader')) && (
                         <div
                             title="Delete"
                             onClick={() => handleDelete(id, isCompanyLogin)}

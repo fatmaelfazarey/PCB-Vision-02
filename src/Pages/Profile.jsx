@@ -8,6 +8,7 @@ import { Navigate } from 'react-router-dom';
 const Profile = () => {
     const { userId, user, userLoading, userError } = useContext(AppContext);
     const { history, userHistoryLoading, userHistoryError } = useContext(AppContext);
+    // console.log(user);
     return (
         <div className='pl-2.5 pr-2.5'>
             {/* 
@@ -25,6 +26,7 @@ const Profile = () => {
                     name={user.name}
                     email={user.email}
                     phone={user.phone}
+                    Date_of_Birth={user.dateOfBirth}
                     password={user.password}
                 />
             }

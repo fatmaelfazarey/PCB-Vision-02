@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import AddPCBImage from '../../Shared/AddPCBImage';
 import { AppContext } from '../../Context/AppContext';
-import { AddNewPCB } from '../../Services/SharedServices';
+// import { AddNewPCB } from '../../Services/SharedServices';
 import { handleDefectsDetection, handleComponentsDetection, handleDefectsAndComponents } from '../../Services/AIRequestService';
 import Response from './Response';
 

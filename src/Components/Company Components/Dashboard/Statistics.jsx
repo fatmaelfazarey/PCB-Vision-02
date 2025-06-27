@@ -1,85 +1,48 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 const Statistics = () => {
-
-    const [error, setError] = useState(null);
-    const [totalPCBs, setTotalPCBs] = useState(0);
-    const [passedPCBs, setPassedPCBs] = useState(0);
-    const [pendingPCBs, setPendingPCBs] = useState(0);
-    const [repairPCBs, setRepairPCBs] = useState(0);
-
-    // const fetchPCBs = useCallback(async () => {
-    //     // console.log("fetchPCBs")
-    //     setError(null);
-    //     try {
-    //         const response = await fetch('http://localhost:3002/PCBs', {
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //         });
-
-    //         if (!response.ok) {
-    //             const errorMessage = await response.text();
-    //             throw new Error(`Failed to fetch PCB history: ${errorMessage}`);
-    //         }
-
-    //         const data = await response.json();
-
-    //         setTotalPCBs(data.length);
-    //         setPassedPCBs(data.filter(pcb => pcb?.Pass_Fail?.Status === 'Pass').length);
-    //         setPendingPCBs(data.filter(pcb => pcb?.Pass_Fail?.Status === 'Pending').length);
-    //         setRepairPCBs(data.filter(pcb => pcb?.Pass_Fail?.Status === 'Repair').length);
-    //     } catch (error) {
-    //         console.error('Error fetching PCB history:', error.message);
-    //         setError(error.message);
-    //     }
-    // }, []);
-
-    // console.log("out");
-
-    // useEffect(() => {
-    //     // console.log("useEffect");
-    //     fetchPCBs();
-
-    //     const intervalId = setInterval(fetchPCBs, 1000);
-
-
-    //     return () => clearInterval(intervalId); // ==>   لما الcomponent  دي تكون مش شغاله او مش فاتح الصفحه اللي فيها  ال component ديsetInterval عشان توقف ال 
-    // }, [fetchPCBs]);
+    const dashboard_url = `https://0dd2-102-186-145-247.ngrok-free.app`
 
     return (
-        <div className="statistics-container">
 
-            {error ? (
-                <p className="error-message">Error: {error}</p>
-            ) : (
-                <div className=" flex gap-2  justify-center">
-                    <div className="w-full   bg-second px-2 py-4 text-center rounded-xl">
-                        <p className="font-bold text-3xl text-main">{totalPCBs}</p>
-                        <h3>Total PCBs</h3>
-
+        <div className="flex flex-col lg:flex-row gap-5 justify-center max-w-7xl mx-auto">
+            {/* <!-- Left Panel Group --> */}
+            <div className="flex flex-col gap-5 w-full lg:w-auto">
+                {/* <!-- First Row --> */}
+                <div className="flex flex-col sm:flex-row gap-2.5 w-full">
+                    <div className="rounded-2xl overflow-hidden shadow-md w-full sm:w-[300px] h-[200px]">
+                        <iframe className="w-full h-full border border-gray-200"
+                            src={`${dashboard_url}/d-solo/eej6p4tne5qm8d/pcb-vision?orgId=1&from=1750221608731&to=1750308008731&timezone=browser&refresh=5s&theme=light&panelId=3&__feature.dashboardSceneSolo`}
+                            frameBorder="0"></iframe>
                     </div>
-
-                    <div className="w-full   bg-second px-2 py-4 text-center rounded-xl">
-                        <p className="font-bold text-3xl">{passedPCBs}</p>
-                        <h3>Passed</h3>
-
-                    </div>
-
-                    <div className="w-full   bg-second px-2 py-4 text-center rounded-xl">
-                        <p className="font-bold text-3xl">{pendingPCBs}</p>
-                        <h3>Pending</h3>
-
-                    </div>
-
-                    <div className="w-full   bg-second px-2 py-4 text-center rounded-xl">
-                        <p className="font-bold text-3xl">{repairPCBs}</p>
-                        <h3>Repair</h3>
-
+                    <div className="rounded-2xl overflow-hidden shadow-md w-full sm:w-[300px] h-[200px]">
+                        <iframe className="w-full h-full border border-gray-200"
+                            src={`${dashboard_url}/d-solo/eej6p4tne5qm8d/pcb-vision?orgId=1&from=1750221673623&to=1750308073623&timezone=browser&refresh=5s&theme=light&panelId=2&__feature.dashboardSceneSolo`}
+                            frameBorder="0"></iframe>
                     </div>
                 </div>
-            )}
+
+                {/* <!-- Second Row --> */}
+                <div className="flex flex-col sm:flex-row gap-2.5 w-full">
+                    <div className="rounded-2xl overflow-hidden shadow-md w-full sm:w-[300px] h-[200px]">
+                        <iframe className="w-full h-full border border-gray-200"
+                            src={`${dashboard_url}/d-solo/eej6p4tne5qm8d/pcb-vision?orgId=1&from=1750430182369&to=1750516582369&timezone=browser&refresh=5s&theme=light&panelId=4&__feature.dashboardSceneSolo`}
+                            frameBorder="0"></iframe>
+                    </div>
+                    <div className="rounded-2xl overflow-hidden shadow-md w-full sm:w-[300px] h-[200px]">
+                        <iframe className="w-full h-full border border-gray-200"
+                            src={`${dashboard_url}/d-solo/eej6p4tne5qm8d/pcb-vision?orgId=1&from=1750221713595&to=1750308113595&timezone=browser&refresh=5s&theme=light&panelId=5&__feature.dashboardSceneSolo`}
+                            frameBorder="0"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            {/* <!-- Right Large Panel --> */}
+            <div className="rounded-2xl overflow-hidden shadow-md w-full lg:w-[600px] h-[700px]">
+                <iframe className="w-full h-full border border-gray-200"
+                    src={`${dashboard_url}/d-solo/eej6p4tne5qm8d/pcb-vision?orgId=1&from=1750221588731&to=1750307988731&timezone=browser&refresh=5s&theme=light&panelId=6&__feature.dashboardSceneSolo`}
+                    frameBorder="0"></iframe>
+            </div>
         </div>
     );
 };

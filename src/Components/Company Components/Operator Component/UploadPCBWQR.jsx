@@ -44,7 +44,7 @@ const UploadPCBWQR = ({ employeeId, Line_ID }) => {
 
     // Function to validate form inputs
     const validateForm = () => {
-    
+
 
         if (!formData.SN) {
             handleShowToast(t('Enter the serial number.'));
@@ -68,6 +68,8 @@ const UploadPCBWQR = ({ employeeId, Line_ID }) => {
         setIsLoading(true); // Show loading spinner
         window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
         const response = await AddNewPCB(formData, true);
+        // alert(response);
+        // console.log(response);
 
         if (!response.defectFlag) {
             handleShowToast(t(`PCB Pass with no defects.`));

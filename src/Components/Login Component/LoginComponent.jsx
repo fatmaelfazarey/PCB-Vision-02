@@ -21,7 +21,7 @@ const LoginComponent = (props) => {
     const [errors, setErrors] = useState({});
     const [rememberMe, setRememberMe] = useState(false);
     const [formData, setFormData] = useState({
-        name: "",
+        email: "",
         password: "",
     });
 
@@ -38,7 +38,7 @@ const LoginComponent = (props) => {
     // Validation
     const validate = useCallback(() => {
         const newErrors = {};
-        if (!formData.name.trim()) newErrors.name = "name is required";
+        if (!formData.email.trim()) newErrors.email = "name is required";
         if (!formData.password.trim()) newErrors.password = "password is required";
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -49,7 +49,7 @@ const LoginComponent = (props) => {
         const savedCredentials = getCredentials();
         if (savedCredentials) {
             setFormData({
-                name: savedCredentials.email,
+                email: savedCredentials.email,
                 password: savedCredentials.password,
             });
             setRememberMe(true);
@@ -63,18 +63,18 @@ const LoginComponent = (props) => {
 
         try {
             if (props.isCompanyLogin) {
-                const user = await LoginAsCompany(formData.name, formData.password, setEmployee, setEmployeeId, setRole, setEmployeeLoading, setEmployeeError);
+                const user = await LoginAsCompany(formData.email, formData.password, setEmployee, setEmployeeId, setRole, setEmployeeLoading, setEmployeeError);
                 if (user) {
                     rememberMe
-                        ? saveCredentials(formData.name, formData.password)
+                        ? saveCredentials(formData.email, formData.password)
                         : clearCredentials();
                     navigate(`/${localStorage.getItem('role')}/${localStorage.getItem('employeeId')}`);
                 }
             } else {
-                const user = await LoginUser(formData.name, formData.password, setUserId, setUser, setUserLoading, setUserError);
+                const user = await LoginUser(formData.email, formData.password, setUserId, setUser, setUserLoading, setUserError);
                 if (user) {
                     rememberMe
-                        ? saveCredentials(formData.name, formData.password)
+                        ? saveCredentials(formData.email, formData.password)
                         : clearCredentials();
                     navigate(`/main/${localStorage.getItem('userId')}`);
                 }
@@ -96,18 +96,18 @@ const LoginComponent = (props) => {
                 <form onSubmit={handleSubmit} className='flex flex-col w-full gap-3 mt-4 mb-4 items-end'>
                     {/* name Field */}
                     <div className='flex flex-col w-full'>
-                        <label htmlFor="name" className={`text-sub-text block text-sm`}>
-                            {t('User Name')}
+                        <label htmlFor="email" className={`text-sub-text block text-sm`}>
+                            {t('Email')}
                         </label>
                         <input
-                            id='name'
-                            name="name"
+                            id='email'
+                            name="email"
                             type='text'
-                            value={formData.name}
+                            value={formData.email}
                             onChange={handleChange}
                             className={`w-full font-[400] dark:text-white rounded-xl outline-0 caret-main p-2 bg-second dark:bg-second-dark`}
                         />
-                        {errors.name && <span className="text-red-500 text-[.6rem]">{t(errors.name)}</span>}
+                        {errors.email && <span className="text-red-500 text-[.6rem]">{t(errors.email)}</span>}
                     </div>
 
                     {/* password Field */}

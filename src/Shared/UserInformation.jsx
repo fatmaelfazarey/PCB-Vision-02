@@ -88,21 +88,45 @@ const UserInformation = ({ id, isCompanyLogin, image, name, email, phone, Date_o
                                         onChange={(e) => setUserData({ ...userData, Email: e.target.value })}
                                     />
                                     {!isCompanyLogin && (
+                                        <>
+                                            <input
+                                                type='tel'
+                                                value={userData.Phone || ''}
+                                                className={`font-[400] text-[18px] text-title w-fit`}
+                                                onChange={(e) => setUserData({ ...userData, Phone: e.target.value })}
+                                            />
+                                            <input
+                                                type='text'
+                                                value={userData.Date_of_Birth || ''}
+                                                className={`font-[400] text-[18px] text-title w-fit`}
+                                                onChange={(e) => setUserData({ ...userData, Date_of_Birth: e.target.value })}
+                                            />
+
+                                        </>
+
+                                    )}
+
+
+
+                                    {/* {!isCompanyLogin && (
                                         <input
                                             type="tel"
                                             value={userData.Phone || ''}
                                             className={`font-[400] text-[18px] text-title w-fit`}
                                             onChange={(e) => setUserData({ ...userData, Phone: e.target.value })}
                                         />
-                                    )}
+                                    )} */}
                                 </div>
                             ) : (
                                 <div>
                                     <p className={`font-bold text-3xl text-black dark:text-second`}>{userData.Name || 'User Name'}</p>
                                     <p className={`font-[400] text-[18px] text-title`}>{userData.Email || 'test.user@example.com'}</p>
-                                    <p className={`font-[400] text-[18px] text-title`}>{userData.Phone || ''}</p>
+                                    {!isCompanyLogin && (
+                                        <p className={`font-[400] text-[18px] text-title`}>{userData.Phone || '01xxxxxxx'}</p>
+                                    )}
+
                                     {Date_of_Birth && (
-                                        <p className={`font-[400] text-[18px] text-title`}>Date of Birth: <span className={`text-[#696969]`}>{Date_of_Birth}</span></p>
+                                        <p className={`font-[400] text-[18px] text-title`}>Date of Birth: <span className={`text-[#696969]`}>{userData.Date_of_Birth || 'dd-mm-yyyy'}</span></p>
                                     )}
                                     {Line_ID && (
                                         <p className={`font-[400] text-[18px] text-title`}>Line: <span className={`text-[#696969]`}>{Line_ID}</span></p>

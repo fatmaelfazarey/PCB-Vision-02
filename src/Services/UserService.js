@@ -1,9 +1,8 @@
 import { PersonalServicesEndPoints } from "./EndPoints";
-
 export const AddNewUser = async (userData) => {
     const url = PersonalServicesEndPoints.ADD_NEW_USER_URL;
-    console.log("Request URL:", url);
-
+    // console.log("Request URL:", url);
+    // const formattedDate = userData.dateOfBirth.split('-').reverse().join('-');
     try {
         const response = await fetch(url, {
             method: 'POST',
@@ -15,45 +14,54 @@ export const AddNewUser = async (userData) => {
                 name: userData.name || '',
                 email: userData.email || '',
                 phone: userData.phone || '',
-                dateOfBirth: '2025-06-20T13:54:08.429Z',
+                dateOfBirth: userData.dateOfBirth || '',
                 password: userData.password || '',
                 confirmPassword: userData.confirmPassword || ''
             }),
         });
+        // console.log("userData.dateOfBirth" + userData.dateOfBirth)
 
         if (!response.ok) {
             const errorData = await response.json();
             console.error('Server Validation Errors:', errorData);
 
-            let errorMessage = 'Failed to register user.';
-            if (errorData.errors) {
-                errorMessage += '\n' + Object.values(errorData.errors).join('\n');
-            } else if (errorData.message) {
-                errorMessage += '\n' + errorData.message;
+
+            if (Array.isArray(errorData)) {
+                const errorMessages = errorData.map(error => error.description);
+                const formattedErrors = errorMessages.join('\n\n');
+                alert(`Registration failed:\n\n${formattedErrors}`);
+                throw new Error(formattedErrors);
             }
 
-            alert(errorMessage);
-            throw new Error(errorMessage);
+            else if (errorData.errors) {
+                const errorMessages = Object.values(errorData.errors).join('\n\n');
+                alert(`Registration failed:\n\n${errorMessages}`);
+                throw new Error(errorMessages);
+            }
+            else {
+                const errorMessage = errorData.message || 'Failed to register user. Please try again.';
+                alert(`Registration failed:\n\n${errorMessage}`);
+                throw new Error(errorMessage);
+            }
         }
 
         if (response.status === 204) {
-            console.log("User added successfully (no content returned).");
-            alert("User registered successfully!");
+            // console.log("User added successfully (no content returned).");
+            // alert("User registered successfully!");
             return { success: true };
         }
 
         const data = await response.json();
         console.log("Registration Success:", data);
-        alert("User registered successfully!");
+        // alert("User registered successfully!");
         return data;
 
     } catch (error) {
         console.error('Registration Error:', error.message);
 
-        if (error.message) {
-            alert(`Registration Error: ${error.message}`);
-        } else {
-            alert("An unknown error occurred during registration.");
+
+        if (!error.message.startsWith('Registration failed:')) {
+            alert(`Registration Error: ${error.message || 'An unknown error occurred'}`);
         }
 
         throw error;
@@ -93,6 +101,7 @@ export const getUserIsLogined = async (userId, setUser, setUserLoading, setUserE
         }
 
         const userData = await response.json();
+        // console.log('get user is logined : ' + userData)
         setUser(userData);
         return userData;
     } catch (error) {
@@ -114,7 +123,7 @@ export const LoginUser = async (email, password, setUserId, setUser, setUserLoad
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                name: email,
+                email: email,
                 password: password
             }),
         });
@@ -145,79 +154,84 @@ export const LoginUser = async (email, password, setUserId, setUser, setUserLoad
     }
 };
 
-export const forgotPassword = async (email, phone) => {
+export const forgotPassword = async (email) => {
 
-    const url = PersonalServicesEndPoints.FORGOT_PASSWORD_URL(email, phone);
+    const url = PersonalServicesEndPoints.FORGOT_PASSWORD_URL;
     try {
-        const response = await fetch(url);
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email
+
+            }),
+        });
+
         if (!response.ok) {
             throw new Error('Failed to fetch users');
         }
         const users = await response.json();
-        if (users.length > 0) {
-            return users[0];
-        } else {
-            alert("Invalid email or phone. Please try again.");
-            return null;
-        }
+        return users
+        // if (users.length > 0) {
+        //     return users[0];
+        // } else {
+        //     alert("Invalid email. Please try again.");
+        //     return null;
+        // }
     } catch (error) {
         alert('Error logging in, Check the server connection', error.message);
     }
 };
 
-export const UpdatePassword = async (email, password, confirmPassword) => {
-    // Validate that passwords match
-    if (password !== confirmPassword) {
-        alert("Passwords don't match");
-        return null;
-    }
-
-    // const url = `http://localhost:3001/users?Email=${email}`;
-    const url = PersonalServicesEndPoints.GET_USER_WITH_EMAIL_TO_UPDATE_PASSWORD(email);
+export const UpdatePassword = async (formData) => {
+    const url = PersonalServicesEndPoints.RESET_PASSWORD;
 
     try {
-        // 1. Find the user
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Failed to fetch users');
-        }
-
-        const users = await response.json();
-
-        if (users.length === 0) {
-            alert("User not found");
-            return null;
-        }
-
-        const user = users[0];
-
-        // 2. Update only the password fields
-        const updatedUser = {
-            ...user,  // Keep all existing user data
-            Password: password,
-            ConfirmPassword: confirmPassword
-        };
-
-        // 3. Send the update to the server
-        const updateResponse = await fetch(PersonalServicesEndPoints.Put_USER_WITH_NEW_PASSWORD(user.id), {
-            method: 'PUT',
+        const response = await fetch(url, {
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(updatedUser)
+            body: JSON.stringify({
+                email: formData.Email,
+                token: formData.Code,
+                newPassword: formData.Password,
+            }),
         });
 
-        if (!updateResponse.ok) {
-            throw new Error('Failed to update password');
+        // تحقق من نوع المحتوى أولاً
+        const contentType = response.headers.get('content-type');
+
+        if (!contentType || !contentType.includes('application/json')) {
+            // إذا لم يكن الرد JSON
+            if (response.ok) {
+                return { success: true, message: 'Password updated successfully' };
+            } else {
+                const text = await response.text();
+                throw new Error(text || 'Failed to update password');
+            }
         }
 
-        alert('Password updated successfully');
-        return await updateResponse.json();
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Failed to update password');
+        }
+
+        return {
+            success: true,
+            data: data
+        };
 
     } catch (error) {
         console.error('Error updating password:', error);
-        alert('Error updating password. Please try again.');
-        return null;
+        return {
+            success: false,
+            error: error.message || 'Error updating password. Please try again.'
+        };
     }
 };
 
@@ -260,7 +274,7 @@ function adaptBackendResponse(backendData) {
     // if (!Array.isArray(backendData)) {
     //     backendData = [backendData];
     // }
-
+    // console.log("backendData " + backendData);
     const groupedData = {};
     // groupedData = {
     //     groupId: {

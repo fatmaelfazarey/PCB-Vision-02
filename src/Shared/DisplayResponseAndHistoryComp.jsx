@@ -49,7 +49,8 @@ const DisplayResponseAndHistoryComp = (props) => {
             Object.entries(components.statistics).map(([componentsName, statistics], idx) => (
                 <li key={idx} className='flex items-center gap-2 text-xl text-title '>
                     <span className="w-2 h-2 border-2 border-sub-text rounded-full flex-shrink-0"></span>
-                    <span>{componentsNameFormat[componentsName]} : {statistics}</span>
+                    {/* <span>{componentsNameFormat[componentsName]} : {statistics}</span> */}
+                    <span>{componentsName} : {statistics}</span>
                 </li>))}
         </ul>
     };

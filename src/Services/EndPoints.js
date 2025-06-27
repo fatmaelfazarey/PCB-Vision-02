@@ -75,7 +75,7 @@
 
 // https://0936-41-46-34-191.ngrok-free.app/api/Leader/delete-employee/352d6e08-af99-4705-8f81-c32f4755b017
 
-const url = `https://7598-41-46-34-191.ngrok-free.app`;
+const url = `https://ce79-154-184-62-9.ngrok-free.app`;
 export const CompanyServicesEndPoints = {
     //Get a history for each role
     GET_PCBS_URL: `${url}/api/Employee/my-history`,
@@ -110,7 +110,9 @@ export const PersonalServicesEndPoints = {
     // GET => Return user data
     GET_USER_IS_LOGINED: `${url}/api/Users/profile`,
     //GET 
-    GET_USER_HISTORY: `${url}/api/Users/history`
+    GET_USER_HISTORY: `${url}/api/Users/history`,
+    FORGOT_PASSWORD_URL: `${url}/api/Users/forgot-password`,
+    RESET_PASSWORD: `${url}/api/Users/reset-password`
 };
 //#endregion
 
@@ -121,12 +123,12 @@ export const SharedServicesEndPoints = {
     // ADD_NEW_PCB_USER_URL: () => `http://localhost:3001/pcbs`,
 
     // PATCH
-    UPDATE_USER_INFO_COMPANY_URL: `${url}/api/Users/edit-profile`,
+    UPDATE_USER_INFO_COMPANY_URL: `${url}/api/Employee/update-profile`,
     UPDATE_USER_INFO_USER_URL: `${url}/api/Users/edit-profile`,
 
     // DELETE
-    DELETE_PCB_COMPANY_URL: (pcbId) => `http://localhost:3002/PCBs/${pcbId}`,
-    DELETE_PCB_USER_URL: (pcbId) => `http://localhost:3001/pcbs/${pcbId}`,
+    DELETE_PCB_COMPANY_URL: (pcbId) => `${url}/api/Leader/delete-by-id/${pcbId}`,
+    DELETE_PCB_USER_URL: (pcbId) => `${url}/api/Users/delete-history/${pcbId}`,
 
     //POST 
     SEND_FEEDBACK_URL: () => `http://localhost:3003/feedback`,

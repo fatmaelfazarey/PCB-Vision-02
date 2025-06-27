@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import UserInformation from '../../../Shared/UserInformation';
 import { CompanyContext } from '../../../Context/CompanyContext';
-import { GetAnEmployee } from '../../../Services/CompanyServices';
+import { GetAnEmployee, GetAnEmployeeHistory } from '../../../Services/CompanyServices';
 import { useParams } from 'react-router-dom';
 import History from '../../../Shared/History';
 
@@ -9,7 +9,7 @@ const EmployeeDetailsComponent = () => {
   const { employeeDetailsId } = useParams();
   const { editEmployee } = useContext(CompanyContext); // Fixed: using useContext and destructuring properly
   const [showEmployee, setShowEmployee] = useState(null);
-  // const [employeeHistory, setEmployeeHistory] = useState();
+  const [employeeHistory, setEmployeeHistory] = useState();
   const [employeeHistoryLoading, setEmployeeHistoryLoading] = useState(false);
   const [employeeHistoryError, setEmployeeHistoryError] = useState(null);
 
@@ -34,7 +34,8 @@ const EmployeeDetailsComponent = () => {
 
         // Case 2: Fetch employee data if we have an ID but no context data
         if (employeeDetailsId) {
-          const employeeData = await GetAnEmployee(employeeDetailsId, setEmployeeHistoryLoading, setEmployeeHistoryError);
+          // const employeeData = await GetAnEmployee(employeeDetailsId, setEmployeeHistoryLoading, setEmployeeHistoryError);
+          const employeeData = await GetAnEmployee(employeeDetailsId);
 
           if (employeeData) {
             setShowEmployee({
@@ -59,6 +60,23 @@ const EmployeeDetailsComponent = () => {
     loadEmployeeData();
   }, [editEmployee, employeeDetailsId]);
 
+  useEffect(() => {
+    // GetAnEmployeeHistory(employeeDetailsId)
+
+
+    const loadEmployeeHistory = async () => {
+      try {
+        if (employeeDetailsId) {
+          await GetAnEmployeeHistory(employeeDetailsId, setEmployeeHistory, setEmployeeHistoryLoading, setEmployeeHistoryError);
+        }
+      } catch (error) {
+        console.error('Error loading employee data:', error);
+        // Consider adding error state handling here
+      }
+    };
+
+    loadEmployeeHistory();
+  }, [employeeDetailsId])
   if (!showEmployee) {
     return <div className='dark:text-second text-second-dark'>Loading employee data...</div>; // Add proper loading state
   }
@@ -84,7 +102,7 @@ const EmployeeDetailsComponent = () => {
         employeeId={employeeDetailsId} // Using the actual ID from URL params
         // Line_ID={showEmployee.Line_ID}
         // history={employeeHistory}
-        history={showEmployee.history}
+        history={employeeHistory}
         userHistoryLoading={employeeHistoryLoading}
         userHistoryError={employeeHistoryError}
       />

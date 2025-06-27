@@ -94,5 +94,6 @@
     "Processing...": "Processing...",
     "New Password": "New Password",
     "User Name": "User Name",
-    "Username should not contain spaces": "Username should not contain spaces"
+    "Username should not contain spaces": "Username should not contain spaces",
+    "Password has been reset successfully.": "Password has been reset successfully."
 }

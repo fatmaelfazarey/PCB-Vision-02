@@ -13,7 +13,7 @@ const SignComponent = () => {
         name: "",
         email: "",
         phone: "",
-        dateOfBirth: "2025-06-20T13:54:08.429Z",
+        dateOfBirth: "",
         password: "",
         confirmPassword: "",
         // Image: ""
@@ -26,6 +26,7 @@ const SignComponent = () => {
     const phoneRegex = /^01\d{9}$/;
     const PasswordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     const usernameRegex = /^\S+$/;
+    const dateRegex = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-(19|20)\d\d$/;
 
     // Handle input changes
     const handleChange = (e) => {
@@ -39,6 +40,7 @@ const SignComponent = () => {
         if (!usernameRegex.test(formData.name)) newErrors.name = "Username should not contain spaces";
         if (!emailReg.test(formData.email)) newErrors.email = "Invalid email format, userName@example.com";
         if (!phoneRegex.test(formData.phone)) newErrors.phone = "The Egyptian phone number must consist of 11 digits";
+        if (!dateRegex.test(formData.dateOfBirth)) newErrors.dateOfBirth = "Date must be in dd-mm-yyyy format";
         if (!PasswordPattern.test(formData.password)) newErrors.password = "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.";
         if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords do not match";
 
@@ -53,8 +55,9 @@ const SignComponent = () => {
 
             AddNewUser(formData)
                 .then(() => {
+                    // alert(formData)
                     alert(t('Form submitted successfully, You can log in now! ✅'));
-                    console.log(formData);
+                    // console.log(formData);
                     navigate('/login');
                 })
                 .catch((error) => {
@@ -67,7 +70,7 @@ const SignComponent = () => {
                 name: "",
                 email: "",
                 phone: "",
-                dateOfBirth: "2025-06-20T13:54:08.429Z",
+                dateOfBirth: "",
                 password: "",
                 confirmPassword: "",
                 // Image: ""
@@ -125,7 +128,19 @@ const SignComponent = () => {
                         />
                         {errors.phone && <span className="text-red-500 text-[.6rem]">{t(errors.phone)}</span>}
                     </div>
-
+                    {/* Date of Birth */}
+                    <div className='flex flex-col w-full'>
+                        <label htmlFor="dateOfBirth" className={`text-sub-text block text-sm`}>{t('Date of Birth (dd-mm-yyyy)')}</label>
+                        <input
+                            id='dateOfBirth'
+                            value={formData.dateOfBirth}
+                            name="dateOfBirth"
+                            type='text'
+                            onChange={handleChange}
+                            className={`w-full rounded-xl outline-0 caret-main p-2 bg-second dark:bg-second-dark font-[400] dark:text-white`}
+                        />
+                        {errors.dateOfBirth && <span className="text-red-500 text-[.6rem]">{t(errors.dateOfBirth)}</span>}
+                    </div>
                     {/* Password Field */}
                     <div className='flex flex-col w-full'>
                         <label htmlFor="password" className={`text-sub-text block text-sm`}>{t('Password')}</label>

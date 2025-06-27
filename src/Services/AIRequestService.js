@@ -137,6 +137,7 @@ export const detect_defects_and_components = async (imageBase64_1, imageBase64_2
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        // console.log(data);
         return data;
     } catch (error) {
         alert('Error:', error)

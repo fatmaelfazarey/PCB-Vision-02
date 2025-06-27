@@ -25,7 +25,7 @@ export const AddNewPCB = async (pcbData, isCompanyLogin) => {
         const data = await response.json();
         return {
             defectFlag: data.defectFlag,
-            pcbId: data.pcbId 
+            pcbId: data.pcbId
         };
     } catch (error) {
         console.error('Error adding PCB:', error.message);
@@ -38,11 +38,14 @@ export const DeletePCB = async (pcbId, isCompanyLogin) => {
     const url = isCompanyLogin
         ? SharedServicesEndPoints.DELETE_PCB_COMPANY_URL(pcbId)
         : SharedServicesEndPoints.DELETE_PCB_USER_URL(pcbId);
+    const token = `Bearer ${isCompanyLogin ? localStorage.getItem('employeeId') : localStorage.getItem('userId')}`;
     try {
         const response = await fetch(url, {
             method: 'DELETE',
             headers: {
+                'Authorization': token,
                 'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true'
             },
         });
 
@@ -51,8 +54,9 @@ export const DeletePCB = async (pcbId, isCompanyLogin) => {
             throw new Error(`Failed to delete PCB: ${errorMessage}`);
         }
 
-        const data = await response.json();
-        return data;
+        // const data = await response.json();
+        // return data;
+        return true;
     } catch (error) {
         console.error('Error deleting PCB:', error.message);
         throw error;
@@ -66,7 +70,9 @@ export const UpdateUserInfo = async (isCompanyLogin, id, userData, setShowToast,
         : SharedServicesEndPoints.UPDATE_USER_INFO_USER_URL;
 
     try {
-        const token = `Bearer ${localStorage.getItem('userId')}`; 
+        const token = `Bearer ${isCompanyLogin ? localStorage.getItem('employeeId') : localStorage.getItem('userId')}`;
+
+        const formattedDate = userData.Date_of_Birth.split('-').reverse().join('-');
 
         const response = await fetch(url, {
             method: "PUT",
@@ -77,7 +83,7 @@ export const UpdateUserInfo = async (isCompanyLogin, id, userData, setShowToast,
             },
             body: JSON.stringify({
                 name: userData.Name || '',
-                dateOfBirth: userData.Date_of_Birth || '',
+                dateOfBirth: formattedDate || '',
                 phone: userData.Phone || '',
                 email: userData.Email || ''
 
@@ -89,7 +95,7 @@ export const UpdateUserInfo = async (isCompanyLogin, id, userData, setShowToast,
             throw new Error(`Failed to update user: ${errorMessage}`);
         }
 
-        const data = await response.json();
+        // const data = await response.json();
         setShowToast(true);
         handleShowToast('User updated successfully! 🎉');
     } catch (error) {
