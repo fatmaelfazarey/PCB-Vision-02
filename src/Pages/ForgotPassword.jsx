@@ -342,7 +342,7 @@ const ForgotPassword = () => {
                     setIsVerified(true);
                 }
             } else {
-              
+
                 if (!formData.Code.trim()) {
                     setErrors(prev => ({ ...prev, Code: t("Verification code is required") }));
                     setIsSubmitting(false);
@@ -353,9 +353,11 @@ const ForgotPassword = () => {
                     formData
                 );
 
-                if (user) {
+                if (user.success) {
                     alert(t('Password has been reset successfully.'))
                     navigate('/login');
+                } else {
+                    alert(t('Failed to update password. Please try again.'))
                 }
             }
         } catch (error) {
