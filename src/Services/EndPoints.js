@@ -1,7 +1,7 @@
 
-export const dashboard_url = `https://be91-154-178-243-190.ngrok-free.app/`;
+export const dashboard_url = `https://b304-154-178-243-190.ngrok-free.app`;
 
-const url = `https://a77f-154-178-243-190.ngrok-free.app`;
+const url = `https://0560-154-178-243-190.ngrok-free.app`;
 
 
 
