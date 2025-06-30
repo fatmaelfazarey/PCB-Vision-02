@@ -43,21 +43,12 @@ const HistoryComponent = ({
     const handleDelete = async (pcbId, isCompanyLogin) => {
         if (!window.confirm('Do you want to delete this PCB?')) return;
         const success = await DeletePCB(pcbId, isCompanyLogin);
-        if (success) showToastMessage('PCB deleted successfully. Please reload the page.');
+        if (success) {
+            showToastMessage('PCB deleted successfully. Please reload the page.');
+            setHidePCB(pcbId);
+        }
     };
 
-    // const updatePassFailStatus = async (pcbId, status) => {
-    //     const passFailUpdate = {
-    //         Engineer_ID: userId,
-    //         Pass_Fail: {
-    //             Modified_By: userId,
-    //             Status: status,
-    //             Modified_Time: GetCurrentDateTime()
-    //         }
-    //     };
-    //     StatusUpdate(pcbId, passFailUpdate);
-    //     // if (StatusUpdate(pcbId, passFailUpdate)) window.location.reload();
-    // };
 
     const handlePass = (pcbId) => { StatusUpdate(pcbId, true); setHidePCB(pcbId) };
     const handleRepair = (pcbId) => { StatusUpdate(pcbId, false); setHidePCB(pcbId) };
@@ -99,6 +90,7 @@ const HistoryComponent = ({
                         image2={image2}
                         isCompanyLogin={isCompanyLogin}
                         magnify={useMagnify}
+                        hidePCB={hidePCB === id}
                     />
                 )}
 

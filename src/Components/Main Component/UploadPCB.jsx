@@ -21,6 +21,7 @@ const UploadPCB = ({ isGuest }) => {
     });
 
     const handleImageUpload = (fieldName, value) => {
+
         setFormData(prevState => {
             const updatedState = { ...prevState, [fieldName]: value };
             return updatedState;
@@ -29,6 +30,7 @@ const UploadPCB = ({ isGuest }) => {
 
     const resetForm = () => {
         window.location.reload();
+
     };
 
     useEffect(() => {
@@ -59,6 +61,7 @@ const UploadPCB = ({ isGuest }) => {
             // setResponseData(formData);
 
             setIsFormUpdated(true); // Trigger data saving
+
         }
         else if (isGuest) {
 
@@ -126,9 +129,11 @@ const UploadPCB = ({ isGuest }) => {
                 <div className="flex flex-col lg:flex-row  gap-3 w-full items-center justify-center">
                     <AddPCBImage
                         image='image1'
+                        imageTitle='Front Side - with Defects'
                         onImageUpload={handleImageUpload} />
                     <AddPCBImage
                         image='image2'
+                        imageTitle='Back Side - with Components'
                         onImageUpload={handleImageUpload} />
                 </div>
                 <div className="flex flex-row gap-3 w-full items-center justify-evenly">

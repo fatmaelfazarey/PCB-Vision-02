@@ -91,7 +91,7 @@ const UserInformation = ({ id, isCompanyLogin, image, name, email, phone, Date_o
                                         <>
                                             <input
                                                 type='tel'
-                                                value={userData.Phone || ''}
+                                                value={userData.Phone || '01234567890'}
                                                 className={`font-[400] text-[18px] text-title w-fit`}
                                                 onChange={(e) => setUserData({ ...userData, Phone: e.target.value })}
                                             />
@@ -101,12 +101,8 @@ const UserInformation = ({ id, isCompanyLogin, image, name, email, phone, Date_o
                                                 className={`font-[400] text-[18px] text-title w-fit`}
                                                 onChange={(e) => setUserData({ ...userData, Date_of_Birth: e.target.value })}
                                             />
-
                                         </>
-
                                     )}
-
-
 
                                     {/* {!isCompanyLogin && (
                                         <input
@@ -122,7 +118,7 @@ const UserInformation = ({ id, isCompanyLogin, image, name, email, phone, Date_o
                                     <p className={`font-bold text-3xl text-black dark:text-second`}>{userData.Name || 'User Name'}</p>
                                     <p className={`font-[400] text-[18px] text-title`}>{userData.Email || 'test.user@example.com'}</p>
                                     {!isCompanyLogin && (
-                                        <p className={`font-[400] text-[18px] text-title`}>{userData.Phone || '01xxxxxxx'}</p>
+                                        <p className={`font-[400] text-[18px] text-title`}>{userData.Phone || '01234567890'}</p>
                                     )}
 
                                     {Date_of_Birth && (

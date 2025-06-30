@@ -113,7 +113,7 @@ const LoginComponent = (props) => {
                     {/* password Field */}
                     <div className='flex flex-col w-full'>
                         <label htmlFor="password" className={`text-sub-text block text-sm`}>
-                            {t('password')}
+                            {t('Password')}
                         </label>
                         <div className='relative'>
                             <input

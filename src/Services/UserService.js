@@ -202,11 +202,11 @@ export const UpdatePassword = async (formData) => {
             }),
         });
 
-        // تحقق من نوع المحتوى أولاً
+
         const contentType = response.headers.get('content-type');
 
         if (!contentType || !contentType.includes('application/json')) {
-            // إذا لم يكن الرد JSON
+          
             if (response.ok) {
                 return { success: true, message: 'Password updated successfully' };
             } else {

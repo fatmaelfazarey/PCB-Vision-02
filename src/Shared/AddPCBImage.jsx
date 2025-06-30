@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const AddPCBImage = ({ image, onImageUpload }) => {
+const AddPCBImage = ({ image, onImageUpload, imageTitle }) => {
     const [uploadImage, setUploadImage] = useState(false);
     const [pcbImage, setPcbImage] = useState();
 
@@ -122,9 +122,10 @@ const AddPCBImage = ({ image, onImageUpload }) => {
 
     return (
         <div className='bg-second dark:bg-second-dark p-2 sm:p-4 w-full sm:w-fit flex flex-col gap-2 fixed_direction'>
+            <p className='text-center text-base'>{imageTitle}</p>
             <div className='w-full sm:w-[400px] h-[500px] bg-black dark:bg-white'>
                 {uploadImage ? (
-                    <img src={pcbImage} alt="Uploaded PCB" className='' loading="lazy"/>
+                    <img src={pcbImage} alt="Uploaded PCB" className='' loading="lazy" />
                 ) : (
                     <div className='bg-black dark:bg-white w-full h-full'>
                         {startVideo && (

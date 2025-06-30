@@ -95,8 +95,8 @@ const UploadPCBWQR = ({ employeeId, Line_ID }) => {
 
             {/* Image upload section */}
             <div className="flex flex-col lg:flex-row gap-3 w-full items-center justify-center fixed_direction">
-                <AddPCBImage image='image1' onImageUpload={handleImageUpload} />
-                <AddPCBImage image='image2' onImageUpload={handleImageUpload} />
+                <AddPCBImage imageTitle='Front Side - with Defects' image='image1' onImageUpload={handleImageUpload} />
+                <AddPCBImage imageTitle='Back Side - with Components' image='image2' onImageUpload={handleImageUpload} />
             </div>
 
             {/* QR code section */}

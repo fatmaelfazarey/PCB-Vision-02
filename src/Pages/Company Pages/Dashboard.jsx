@@ -36,6 +36,7 @@ const Dashboard = ({ children }) => {
             {employeeLoading && <Loading />}
 
             {employee && (
+                
                 <>
                     <SecondHeader
                         // navigateTo={`/company-profile/${employeeId}`}

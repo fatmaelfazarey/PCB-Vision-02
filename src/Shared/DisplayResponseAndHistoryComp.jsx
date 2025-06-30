@@ -123,37 +123,6 @@ const DisplayResponseAndHistoryComp = (props) => {
     }
     //#endregion
 
-    //#region get name Cancel when connecting to backend server
-    // const getName = async (id, setName) => {
-    //     const url = `http://localhost:3002/employees/${id}`;
-    //     try {
-    //         const response = await fetch(url);
-    //         if (!response.ok) {
-    //             throw new Error('Failed to fetch users');
-    //         }
-    //         const users = await response.json();
-    //         if (users) {
-    //             setName(users.Name);
-    //             return users.Name;
-    //         } else {
-    //             alert("Invalid user. Please try again.");
-    //             return null;
-    //         }
-    //     } catch (error) {
-    //         console.error('Error logging in:', error);
-    //     }
-    // };
-    // const [e_name, setE_name] = useState();
-    // const [o_name, setO_name] = useState();
-    // useEffect(() => {
-    //     if (props.Engineer_ID || props.Operator_ID) {
-
-    //         getName(props.Engineer_ID, setE_name);
-    //         getName(props.Operator_ID, setO_name);
-    //     }
-    // })
-
-    //#endregion
 
     //#region Dealing with names returned from AI
     const getOnlyLetters = (input) => {

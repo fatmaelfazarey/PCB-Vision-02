@@ -119,7 +119,7 @@ const EmployeesListComponent = () => {
                                             <img
                                                 src={emp.Image || assets.add_user}
                                                 alt={emp.name}
-                                                className="h-10 w-10 rounded-full object-cover"
+                                                className="h-10 w-10 rounded-full object-cover bg-second dark:bg-second-dark "
                                                 onError={(e) => (e.target.src = assets.add_user)}
                                             />
                                             <span className="text-gray-900 dark:text-white">
@@ -144,7 +144,8 @@ const EmployeesListComponent = () => {
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm  text-title dark:text-gray-300" onClick={(e) => { e.stopPropagation(); handleEdit(emp); }}>
 
-                                        <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
+                                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
+                                            className='fill-main'
                                             width="25px" height="25px" viewBox="0 0 494.936 494.936"
                                             xmlSpace="preserve">
                                             <g>
@@ -182,51 +183,3 @@ const EmployeesListComponent = () => {
 
 export default EmployeesListComponent
 
-//   {/* Patients Table Section */}
-// <div
-//     className='patientTableHandleScrollBar'
-//     style={{ borderRadius: '8px', overflow: "scroll", flex: '1', height: '100%' }}
-// >
-//     {PatientError ? (
-//         <p>Error: {PatientError.message}</p>
-//     ) : !PatientsIsLoaded ? (
-//         <p>Loading...</p>
-//     ) : filteredPatients.length ? (
-//         <table className="table table-hover">
-//             <thead>
-//                 <tr>
-//                     <th scope="col" className='text-center align-middle'>#</th>
-//                     <th scope="col" className='text-center align-middle'>Name</th>
-//                     <th scope="col" className='text-center align-middle'>Age</th>
-//                     <th scope="col" className='text-center align-middle'>Phone</th>
-//                     <th scope="col" className='text-center align-middle'>Email</th>
-//                 </tr>
-//             </thead>
-//             <tbody>
-//                 {filteredPatients.map((p, i) => (
-//                     <tr key={i} onClick={() => navigate(`/patient/${p.id}`)}>
-//                         <th scope="row" className='text-center align-middle'>{i + 1}</th>
-//                         <td className='d-flex align-items-center gap-2'>
-//                             <img
-//                                 src={p.image || assets.default_patient_image}
-//                                 alt={p.name}
-//                                 onError={(e) => (e.target.src = assets.default_patient_image)}
-//                                 width='50'
-//                                 style={{ borderRadius: "50%" }}
-//                             />
-//                             <p>{p.name}</p>
-//                         </td>
-//                         <td className='text-center align-middle'>{p.age}</td>
-//                         <td className='text-center align-middle'>{p.phone}</td>
-//                         <td className='text-center align-middle'>{p.email}</td>
-//                     </tr>
-//                 ))}
-//             </tbody>
-//         </table>
-//     ) : (
-//         <div className='d-flex align-items-center justify-content-center flex-column h-100'>
-//             <img src={assets.Detective_check_footprint} alt='No patients found' width='300' />
-//             <span>Empty...</span>
-//         </div>
-//     )}
-// </div>
